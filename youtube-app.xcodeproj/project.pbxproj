@@ -223,6 +223,7 @@
 				TargetAttributes = {
 					E0E69B951BF527BF003870D1 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 68EN624LSJ;
 					};
 					E0E69BAB1BF527C0003870D1 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -479,6 +480,7 @@
 			baseConfigurationReference = 2607BCB6C3600F9C4ED7D14F /* Pods-youtube-app.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "youtube-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "univie.pae.youtube-app";
@@ -492,6 +494,7 @@
 			baseConfigurationReference = 732E2BCCE9C5E3E0093E6D2C /* Pods-youtube-app.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "youtube-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "univie.pae.youtube-app";
