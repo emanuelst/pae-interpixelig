@@ -13,6 +13,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     @IBOutlet weak var playerView: YTPlayerView!
     @IBOutlet weak var searchResults: UITableView!
+    @IBOutlet weak var search: UITextField!
     
     // TODO convert to class, e.g. "youtubeBrain"
     var jsonDict: NSDictionary = NSDictionary()
@@ -20,6 +21,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var loaded: Bool = false
     
     var rowNo = 0
+    
+    @IBAction func searchChanged(sender: AnyObject) {
+        getSearchResults(search.text!)
+        self.searchResults.reloadData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,16 +51,27 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // we assume we have a working internet connection
     // do a search, get results from url, parse and set dictionary
-    // limited to ~500,000 per day
-    func getSearchResults() {
+    // limited to ~500,000 per day!
+    func getSearchResults(searchstring: String = "pratersauna") {
         //we only get video results
+        //todo escape searchstring
+        //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
     
-        let url = NSURL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&q=pratersauna&type=video&key=AIzaSyBZUMiwTPwUM5kQo7KZGNnvpV1SGJYdXU0")
+        var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=AIzaSyBZUMiwTPwUM5kQo7KZGNnvpV1SGJYdXU0"
         
+        var escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+                
+        var nsurl = NSURL(string: escape!)
+        let session = NSURLSession.sharedSession()
         // get JSON from URL and parse into dictionary
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            self.jsonDict = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+        var task = session.dataTaskWithURL(nsurl!) {
+            (data, response, error) -> Void in
             
+            do {
+            self.jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+            } catch {
+                //handle error
+            }
             //print(jsonDict!["items"]!)
             //self.dictionary = jsonDict!["items"]! as! NSDictionary
             //use swifty json?
@@ -70,7 +87,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             */
             self.loaded=true
             self.searchResults.reloadData()
-
         }
         task.resume()
     }
@@ -91,11 +107,12 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             number = jsonDict["items"]!.count
         }
         // return the correct number of rows for our picker
-        return 5
+        return number
     }
     
     let textCellIdentifier = "TextCell"
     
+    //TODO handle errors! (results < 5, ...)
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as UITableViewCell
         
@@ -110,8 +127,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.textLabel?.text = text["title"] as? String
             cell.detailTextLabel?.text = id["videoId"] as? String
 
-            print(text["title"])
-            print(id["id"])
+            //print(text["title"])
+            //valprint(id["id"])
             
         }
         return cell
@@ -124,7 +141,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         var id = jsonDict["items"]?[row]!["id"] as! NSDictionary
         var vid = id["videoId"] as? String
         
-        print(row)
+        //print(row)
 
         playerView.loadWithVideoId(vid, playerVars: playerVars)
     }
