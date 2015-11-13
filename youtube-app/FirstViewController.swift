@@ -21,6 +21,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var loaded: Bool = false
     
     var rowNo = 0
+    var key = "default"
     
     @IBAction func searchChanged(sender: AnyObject) {
         getSearchResults(search.text!)
@@ -30,6 +31,16 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // api key
+        var keys: NSDictionary?
+        
+        if let path = NSBundle.mainBundle().pathForResource("keys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        key = keys?["youtubeApiKey"] as! String
+        
+        print(key)
         
         // load video in our player view
         let videoId = "enXT2jgB5bs"
@@ -57,7 +68,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //todo escape searchstring
         //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
     
-        var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=AIzaSyBZUMiwTPwUM5kQo7KZGNnvpV1SGJYdXU0"
+        var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=\(key)"
         
         var escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
                 
