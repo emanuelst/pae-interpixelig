@@ -35,16 +35,10 @@ class DetailViewController: UIViewController {
                 let videoId = detail.valueForKey("videoId")!.description
                 
                 let playerVars: [String: Int] = ["playsinline": 1]
-                
                 player.loadWithVideoId(videoId, playerVars: playerVars)
             }
             //let videoId = "enXT2jgB5bs"
-
-            
-
         }
-
-
     }
     
     override func viewDidLoad() {

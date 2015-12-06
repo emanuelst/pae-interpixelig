@@ -11,6 +11,14 @@ import CoreData
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
+    @IBOutlet weak var searchField: UITextField!
+    
+    @IBAction func searchChanged(sender: AnyObject) {
+        print(searchField.text)
+        deleteAllData("Video")
+        getSearchResults(searchField.text!)
+    }
+    
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
     
@@ -35,7 +43,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         
         // setup dummy data... should this go into viewDidLoad?
-        
         
         // get api key
         var keys: NSDictionary?
@@ -62,9 +69,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         //self.searchResults.reloadData()
         
         deleteAllData("Video")
-        for index in 1...5 {
-            //insertNewObject(self, videoId: "xyz")
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
