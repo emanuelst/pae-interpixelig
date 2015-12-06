@@ -26,15 +26,22 @@ class DetailViewController: UIViewController {
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
             if let label = self.detailDescriptionLabel {
-                label.text = detail.valueForKey("timeStamp")!.description
+                label.text = detail.valueForKey("videoId")!.description
             }
         }
         
         if let player = self.playerView {
-            let videoId = "enXT2jgB5bs"
-            let playerVars: [String: Int] = ["playsinline": 1]
-    
-            player.loadWithVideoId(videoId, playerVars: playerVars)
+            if let detail = self.detailItem {
+                let videoId = detail.valueForKey("videoId")!.description
+                
+                let playerVars: [String: Int] = ["playsinline": 1]
+                
+                player.loadWithVideoId(videoId, playerVars: playerVars)
+            }
+            //let videoId = "enXT2jgB5bs"
+
+            
+
         }
 
 

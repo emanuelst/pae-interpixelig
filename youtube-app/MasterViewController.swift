@@ -14,6 +14,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
     
+    // default api key…
+    var key = "default"
+    
+    // TODO convert to class, e.g. "youtubeBrain" - BRAAAAAAINS!!!
+    var jsonDict: NSDictionary = NSDictionary()
+    var snippet: NSDictionary = NSDictionary()
+    var loaded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +32,40 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        }
+        
+        // setup dummy data... should this go into viewDidLoad?
+        
+        
+        // get api key
+        var keys: NSDictionary?
+        
+        if let path = NSBundle.mainBundle().pathForResource("keys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        key = keys?["youtubeApiKey"] as! String
+        
+        print(key)
+        
+        // load video in our player view
+        //let videoId = "enXT2jgB5bs"
+        //let playerVars: [String: Int] = ["playsinline": 1]
+        
+        //playerView.loadWithVideoId(videoId, playerVars: playerVars)
+        
+        getSearchResults()
+        
+        // set tableview to our search results
+        
+        //searchResults.delegate = self
+        //searchResults.dataSource = self
+        
+        //TODO get a search field ;)
+        //self.searchResults.reloadData()
+        
+        deleteAllData("Video")
+        for index in 1...5 {
+            //insertNewObject(self, videoId: "xyz")
         }
     }
     
@@ -38,14 +79,94 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Dispose of any resources that can be recreated.
     }
     
-    func insertNewObject(sender: AnyObject) {
+    // clear persistent storage... does this make sense?
+    // source http://stackoverflow.com/questions/24658641/delete-all-core-data-swift
+    func deleteAllData(entity: String)
+    {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: entity)
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do
+        {
+            let results = try managedContext.executeFetchRequest(fetchRequest)
+            for managedObject in results
+            {
+                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
+                managedContext.deleteObject(managedObjectData)
+            }
+        } catch let error as NSError {
+            print("Detele all data in \(entity) error : \(error) \(error.userInfo)")
+        }
+    }
+    
+    // we assume we have a working internet connection
+    // do a search, get results from url, parse and set dictionary
+    // limited to ~500,000 per day!
+    func getSearchResults(searchstring: String = "pratersauna") {
+        //we only get video results
+        //todo escape searchstring
+        //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        
+        var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=\(key)"
+        
+        var escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        
+        var nsurl = NSURL(string: escape!)
+        let session = NSURLSession.sharedSession()
+        // get JSON from URL and parse into dictionary
+        var task = session.dataTaskWithURL(nsurl!) {
+            (data, response, error) -> Void in
+            
+            do {
+                self.jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+            } catch {
+                //handle error
+            }
+            //print(jsonDict!["items"]!)
+            //self.dictionary = jsonDict!["items"]! as! NSDictionary
+            //use swifty json?
+            //todo only request the needed datas
+            /*
+            for index in 0...4 {
+            var id = jsonDict!["items"]![index]!["id"]! as! NSDictionary
+            var snippet = jsonDict!["items"]![index]!["snippet"]! as! NSDictionary
+            
+            print(id["videoId"])
+            print(snippet["title"])
+            }
+            */
+            self.loaded=true
+            self.loadResults()
+            //todo --> get searchResults to insertNewObject...
+            //self.searchResults.reloadData()
+        }
+        task.resume()
+    }
+    
+    //... json dict isnt sorted
+    func loadResults(){
+        // 5 results...????
+        for index in 0...jsonDict.count-1{
+            //var text = self.jsonDict["items"]?[row]!["snippet"]! as! NSDictionary
+            var id = jsonDict["items"]?[index]!["id"] as! NSDictionary
+            
+            //cell.textLabel?.text = text["title"] as? String
+            
+            var idString = id["videoId"] as? String
+            insertNewObject(self, videoId: idString!)
+        }
+    }
+    
+    func insertNewObject(sender: AnyObject, videoId: String) {
         let context = self.fetchedResultsController.managedObjectContext
         let entity = self.fetchedResultsController.fetchRequest.entity!
         let newManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entity.name!, inManagedObjectContext: context)
         
         // If appropriate, configure the new managed object.
         // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-        newManagedObject.setValue(NSDate(), forKey: "timeStamp")
+        newManagedObject.setValue(videoId, forKey: "videoId")
         
         // Save the context.
         do {
@@ -112,7 +233,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-        cell.textLabel!.text = object.valueForKey("timeStamp")!.description
+        cell.textLabel!.text = object.valueForKey("videoId")!.description
     }
     
     // MARK: - Fetched results controller
@@ -124,14 +245,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         let fetchRequest = NSFetchRequest()
         // Edit the entity name as appropriate.
-        let entity = NSEntityDescription.entityForName("Event", inManagedObjectContext: self.managedObjectContext!)
+        let entity = NSEntityDescription.entityForName("Video", inManagedObjectContext: self.managedObjectContext!)
         fetchRequest.entity = entity
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "timeStamp", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "videoId", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
