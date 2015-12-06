@@ -44,9 +44,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             keys = NSDictionary(contentsOfFile: path)
         }
         key = keys?["youtubeApiKey"] as! String
-        
-        print(key)
-        
+                
         // load video in our player view
         //let videoId = "enXT2jgB5bs"
         //let playerVars: [String: Int] = ["playsinline": 1]
@@ -78,6 +76,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     // clear persistent storage... does this make sense?
     // source http://stackoverflow.com/questions/24658641/delete-all-core-data-swift
@@ -149,17 +148,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     func loadResults(){
         // 5 results...????
         for index in 0...jsonDict.count-1{
-            //var text = self.jsonDict["items"]?[row]!["snippet"]! as! NSDictionary
-            var id = jsonDict["items"]?[index]!["id"] as! NSDictionary
-            
-            //cell.textLabel?.text = text["title"] as? String
-            
+            var id = self.jsonDict["items"]?[index]!["id"] as! NSDictionary
+            var title = self.jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
+
             var idString = id["videoId"] as? String
-            insertNewObject(self, videoId: idString!)
+            var titleString = title["title"] as? String
+
+            insertNewObject(self, videoId: idString!, title: titleString!)
         }
     }
     
-    func insertNewObject(sender: AnyObject, videoId: String) {
+    func insertNewObject(sender: AnyObject, videoId: String, title: String) {
         let context = self.fetchedResultsController.managedObjectContext
         let entity = self.fetchedResultsController.fetchRequest.entity!
         let newManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entity.name!, inManagedObjectContext: context)
@@ -167,6 +166,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // If appropriate, configure the new managed object.
         // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
         newManagedObject.setValue(videoId, forKey: "videoId")
+        newManagedObject.setValue(title, forKey: "title")
         
         // Save the context.
         do {
@@ -233,7 +233,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-        cell.textLabel!.text = object.valueForKey("videoId")!.description
+        cell.textLabel!.text = object.valueForKey("title")!.description
     }
     
     // MARK: - Fetched results controller
