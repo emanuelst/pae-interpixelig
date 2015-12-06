@@ -16,6 +16,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var search: UITextField!
     
     // TODO convert to class, e.g. "youtubeBrain"
+    // test comment
     var jsonDict: NSDictionary = NSDictionary()
     var snippet: NSDictionary = NSDictionary()
     var loaded: Bool = false
