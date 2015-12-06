@@ -23,6 +23,12 @@ class DetailViewController: UIViewController {
     }
     
     func configureView() {
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            print("landscape already")
+            self.navigationController?.hidesBarsWhenVerticallyCompact = true
+            self.navigationController?.navigationBarHidden = true
+        }
+        
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
             if let label = self.detailDescriptionLabel {
@@ -50,6 +56,18 @@ class DetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            print("landscape")
+            self.navigationController?.hidesBarsWhenVerticallyCompact = true
+            self.navigationController?.navigationBarHidden = true
+        } else {
+            print("portrait")
+            self.navigationController?.hidesBarsWhenVerticallyCompact = true
+            self.navigationController?.navigationBarHidden = false
+        }
     }
     
     

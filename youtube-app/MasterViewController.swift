@@ -319,7 +319,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     // In the simplest, most efficient, case, reload the table view.
     self.tableView.reloadData()
     }
-    */
-    
+    */    
 }
 
