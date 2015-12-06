@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import youtube_ios_player_helper
 
 class DetailViewController: UIViewController {
     
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
+    @IBOutlet weak var playerView: YTPlayerView!
     
     var detailItem: AnyObject? {
         didSet {
@@ -27,6 +29,15 @@ class DetailViewController: UIViewController {
                 label.text = detail.valueForKey("timeStamp")!.description
             }
         }
+        
+        if let player = self.playerView {
+            let videoId = "enXT2jgB5bs"
+            let playerVars: [String: Int] = ["playsinline": 1]
+    
+            player.loadWithVideoId(videoId, playerVars: playerVars)
+        }
+
+
     }
     
     override func viewDidLoad() {

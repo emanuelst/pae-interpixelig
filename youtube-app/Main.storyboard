@@ -41,19 +41,35 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AX7-kB-OqT" userLabel="Player View" customClass="YTPlayerView">
+                                <rect key="frame" x="10" y="156" width="580" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="AX7-kB-OqT" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="92" id="M3l-NB-hKt"/>
+                            <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="AX7-kB-OqT" secondAttribute="bottom" constant="8" symbolic="YES" id="TnS-nO-tKc"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="20" symbolic="YES" id="Tsc-yG-G1q"/>
+                            <constraint firstItem="AX7-kB-OqT" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="92" id="beg-Cn-51G"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="jWN-iV-94e"/>
+                            <constraint firstItem="AX7-kB-OqT" firstAttribute="centerX" secondItem="0XM-y9-sOw" secondAttribute="centerX" id="jZh-u8-pIV"/>
+                            <constraint firstItem="AX7-kB-OqT" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="10" id="sBD-4W-O4t"/>
                             <constraint firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" constant="20" symbolic="YES" id="tHV-ZD-HQj"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="beg-Cn-51G"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="deQ-Na-JPF"/>
+                        <outlet property="playerView" destination="AX7-kB-OqT" id="KsK-zr-7UI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
