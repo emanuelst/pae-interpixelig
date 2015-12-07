@@ -12,6 +12,7 @@
 		E0650BA91C147F8400C01495 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0650BA81C147F8400C01495 /* DetailViewController.swift */; };
 		E0650BAD1C14800700C01495 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0650BAC1C14800700C01495 /* Main.storyboard */; };
 		E0650BEF1C1483E200C01495 /* youtube-app.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E0650BED1C1483E200C01495 /* youtube-app.xcdatamodeld */; };
+		E0DB3E831C14ED9B00AA691F /* YoutubeBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DB3E821C14ED9B00AA691F /* YoutubeBrain.swift */; };
 		E0E69B9A1BF527BF003870D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E69B991BF527BF003870D1 /* AppDelegate.swift */; };
 		E0E69B9C1BF527BF003870D1 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E69B9B1BF527BF003870D1 /* FirstViewController.swift */; };
 		E0E69B9E1BF527BF003870D1 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E69B9D1BF527BF003870D1 /* SecondViewController.swift */; };
@@ -49,6 +50,7 @@
 		E0650BAC1C14800700C01495 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E0650BEB1C1483BA00C01495 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E0650BEE1C1483E200C01495 /* youtube-app.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "youtube-app.xcdatamodel"; sourceTree = "<group>"; };
+		E0DB3E821C14ED9B00AA691F /* YoutubeBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeBrain.swift; sourceTree = "<group>"; };
 		E0E69B961BF527BF003870D1 /* youtube-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "youtube-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E69B991BF527BF003870D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0E69B9B1BF527BF003870D1 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				E0E69BA71BF527C0003870D1 /* Info.plist */,
 				E0F35DC81BF58E8D00A80F9D /* keys.plist */,
 				E0650BA61C147F7000C01495 /* MasterViewController.swift */,
+				E0DB3E821C14ED9B00AA691F /* YoutubeBrain.swift */,
 				E0650BA81C147F8400C01495 /* DetailViewController.swift */,
 				E0650BED1C1483E200C01495 /* youtube-app.xcdatamodeld */,
 			);
@@ -361,6 +364,7 @@
 				E0650BA71C147F7000C01495 /* MasterViewController.swift in Sources */,
 				E0E69B9E1BF527BF003870D1 /* SecondViewController.swift in Sources */,
 				E0650BEF1C1483E200C01495 /* youtube-app.xcdatamodeld in Sources */,
+				E0DB3E831C14ED9B00AA691F /* YoutubeBrain.swift in Sources */,
 				E0650BA91C147F8400C01495 /* DetailViewController.swift in Sources */,
 				E0E69B9A1BF527BF003870D1 /* AppDelegate.swift in Sources */,
 				E0E69B9C1BF527BF003870D1 /* FirstViewController.swift in Sources */,

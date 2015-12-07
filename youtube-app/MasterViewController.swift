@@ -11,24 +11,30 @@ import CoreData
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
+    var youtubeBrain = YoutubeBrain()
+    
     @IBOutlet weak var searchField: UITextField!
     
     @IBAction func searchChanged(sender: AnyObject) {
         print(searchField.text)
         deleteAllData("Video")
-        getSearchResults(searchField.text!)
+        
+        youtubeBrain.getSearchResults(searchField.text!)
+        
+        // should use getter
+        dict = youtubeBrain.jsonDict
+        
+        // print(youtubeBrain.jsonDict)
+        loadResults()
+        
+        self.tableView.reloadData()
+        
     }
     
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
     
-    // default api key…
-    var key = "default"
-    
-    // TODO convert to class, e.g. "youtubeBrain" - BRAAAAAAINS!!!
-    var jsonDict: NSDictionary = NSDictionary()
-    var snippet: NSDictionary = NSDictionary()
-    var loaded: Bool = false
+    var dict: NSDictionary? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,31 +48,26 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
-        // setup dummy data... should this go into viewDidLoad?
-        
-        // get api key
-        var keys: NSDictionary?
-        
-        if let path = NSBundle.mainBundle().pathForResource("keys", ofType: "plist") {
-            keys = NSDictionary(contentsOfFile: path)
-        }
-        key = keys?["youtubeApiKey"] as! String
-                
         // load video in our player view
-        //let videoId = "enXT2jgB5bs"
-        //let playerVars: [String: Int] = ["playsinline": 1]
+        // let videoId = "enXT2jgB5bs"
+        // let playerVars: [String: Int] = ["playsinline": 1]
         
-        //playerView.loadWithVideoId(videoId, playerVars: playerVars)
+        // playerView.loadWithVideoId(videoId, playerVars: playerVars)
+        youtubeBrain.initKeys()
+        youtubeBrain.getSearchResults()
         
-        getSearchResults()
+        // should use getter
+        dict = youtubeBrain.jsonDict
+        
+        loadResults()
         
         // set tableview to our search results
         
-        //searchResults.delegate = self
-        //searchResults.dataSource = self
+        // searchResults.delegate = self
+        // searchResults.dataSource = self
         
-        //TODO get a search field ;)
-        //self.searchResults.reloadData()
+        // TODO get a search field ;)
+        // self.searchResults.reloadData()
         
         deleteAllData("Video")
     }
@@ -104,61 +105,20 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
     
-    // we assume we have a working internet connection
-    // do a search, get results from url, parse and set dictionary
-    // limited to ~500,000 per day!
-    func getSearchResults(searchstring: String = "pratersauna") {
-        //we only get video results
-        //todo escape searchstring
-        //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        
-        var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=\(key)"
-        
-        var escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        
-        var nsurl = NSURL(string: escape!)
-        let session = NSURLSession.sharedSession()
-        // get JSON from URL and parse into dictionary
-        var task = session.dataTaskWithURL(nsurl!) {
-            (data, response, error) -> Void in
-            
-            do {
-                self.jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
-            } catch {
-                //handle error
-            }
-            //print(jsonDict!["items"]!)
-            //self.dictionary = jsonDict!["items"]! as! NSDictionary
-            //use swifty json?
-            //todo only request the needed datas
-            /*
-            for index in 0...4 {
-            var id = jsonDict!["items"]![index]!["id"]! as! NSDictionary
-            var snippet = jsonDict!["items"]![index]!["snippet"]! as! NSDictionary
-            
-            print(id["videoId"])
-            print(snippet["title"])
-            }
-            */
-            self.loaded=true
-            self.loadResults()
-            //todo --> get searchResults to insertNewObject...
-            //self.searchResults.reloadData()
-        }
-        task.resume()
-    }
     
     //... json dict isnt sorted
     func loadResults(){
-        // 5 results...????
-        for index in 0...jsonDict.count-1{
-            var id = self.jsonDict["items"]?[index]!["id"] as! NSDictionary
-            var title = self.jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
-
-            var idString = id["videoId"] as? String
-            var titleString = title["title"] as? String
-
-            insertNewObject(self, videoId: idString!, title: titleString!)
+        
+        if(dict != nil && dict!.count != 0){
+            for index in 0...dict!.count-1{
+                var id = dict!["items"]?[index]!["id"] as! NSDictionary
+                var title = dict!["items"]?[index]!["snippet"]! as! NSDictionary
+                
+                var idString = id["videoId"] as? String
+                var titleString = title["title"] as? String
+                
+                //insertNewObject(self, videoId: idString!, title: titleString!)
+            }
         }
     }
     
@@ -200,12 +160,21 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     // MARK: - Table View
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.fetchedResultsController.sections?.count ?? 0
+        //return self.fetchedResultsController.sections?.count ?? 0
+        return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section]
-        return sectionInfo.numberOfObjects
+        //let sectionInfo = self.fetchedResultsController.sections![section]
+        //does this return the correct number...
+        
+        if(dict != nil && dict!.count != 0){
+            return dict!["items"]!.count
+        }
+        else {
+            return 0
+        }
+        //return sectionInfo.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -236,9 +205,24 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-        cell.textLabel!.text = object.valueForKey("title")!.description
+        
+        if(dict == nil && dict!.count == 0){
+            cell.textLabel!.text = "xxx"
+        }
+        else{
+            
+            //
+            //let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
+            
+            // cell.textLabel!.text = object.valueForKey("title")!.description
+            // cell.textLabel!.text = titleString
+            print(indexPath.row)
+            var titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
+            
+            cell.textLabel!.text = titleString
+        }
     }
+    
     
     // MARK: - Fetched results controller
     

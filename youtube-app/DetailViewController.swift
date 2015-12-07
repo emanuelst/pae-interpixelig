@@ -24,7 +24,7 @@ class DetailViewController: UIViewController {
     
     func configureView() {
         if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-            print("landscape already")
+            print("landscape")
             self.navigationController?.hidesBarsWhenVerticallyCompact = true
             self.navigationController?.navigationBarHidden = true
         }
