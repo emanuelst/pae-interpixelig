@@ -29,6 +29,15 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         }
     }
     
+    var vidIndex: Int? {
+        didSet {
+            // Update the view.
+            self.configureView()
+        }
+    }
+    
+    var brain: YoutubeBrain?
+    
     func configureView() {
         if UIDevice.currentDevice().orientation.isLandscape.boolValue {
             print("landscape")
@@ -38,19 +47,20 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         
         
         // Update the user interface for the detail item.
-        if let detail = self.detailItem {
+        if let detail = self.vidIndex {
             if let label = self.detailDescriptionLabel {
                 //label.text = detail.valueForKey("videoId")!.description#
                 label.text = "Description"
+                label.text = brain?.getTitleStringForIndex(vidIndex!)
             }
         }
         
         if let player = self.playerView {
-            if let detail = self.detailItem {
+            if let detail = self.vidIndex {
                 //let videoId = detail.valueForKey("videoId")!.description
                 playerView.delegate = self
 
-                let videoId = detailItem as! String
+                let videoId = brain?.getIdStringForIndex(vidIndex!)
                 
                 let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
                 player.loadWithVideoId(videoId, playerVars: playerVars)

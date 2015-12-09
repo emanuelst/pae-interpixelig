@@ -17,7 +17,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     @IBAction func searchChanged(sender: AnyObject) {
         print(searchField.text)
-        deleteAllData("Video")
+       // deleteAllData("Video")
         
         youtubeBrain.getSearchResults(searchField.text!) { (response) in
             if let dictionary = response as NSDictionary? {
@@ -65,7 +65,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
         }
         
-        // deleteAllData("Video")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -76,29 +75,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    
-    // clear persistent storage... does this make sense?
-    // source http://stackoverflow.com/questions/24658641/delete-all-core-data-swift
-    func deleteAllData(entity: String)
-    {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: entity)
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        do
-        {
-            let results = try managedContext.executeFetchRequest(fetchRequest)
-            for managedObject in results
-            {
-                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
-                managedContext.deleteObject(managedObjectData)
-            }
-        } catch let error as NSError {
-            print("Detele all data in \(entity) error : \(error) \(error.userInfo)")
-        }
     }
     
     func insertNewObject(sender: AnyObject, videoId: String, title: String) {
@@ -129,8 +105,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 //let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                
                 // controller.detailItem = object
-                controller.detailItem = youtubeBrain.getIdStringForIndex(indexPath.row)
+                controller.brain = youtubeBrain
+                // todo --> pass vid id instead or create a video object...
+                // todo --> we can create a video object (for description, id and title), pass our brain and get comments via the vid Id !
+                controller.vidIndex = indexPath.row
+                
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
