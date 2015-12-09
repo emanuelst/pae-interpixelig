@@ -19,15 +19,28 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         print(searchField.text)
         deleteAllData("Video")
         
-        youtubeBrain.getSearchResults(searchField.text!)
+        //youtubeBrain.getSearchResults(searchField.text!)
+        youtubeBrain.getSearchResults(searchField.text!) { (response) in
+            if let dictionary = response as? NSDictionary {
+                
+                
+                self.dict = dictionary
+                print("dict...")
+                print(self.dict)
+                // self.loadResults()
+                self.tableView.reloadData()
+
+            }
+        }
         
         // should use getter
-        dict = youtubeBrain.jsonDict
+        // dict = youtubeBrain.jsonDict
         
         // print(youtubeBrain.jsonDict)
-        loadResults()
+
         
-        self.tableView.reloadData()
+        // is one ”searchChanged" too slow...
+      //  self.tableView.reloadData()
         
     }
     
@@ -54,10 +67,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         // playerView.loadWithVideoId(videoId, playerVars: playerVars)
         youtubeBrain.initKeys()
-        youtubeBrain.getSearchResults()
+        //youtubeBrain.getSearchResults()
+        
+        youtubeBrain.getSearchResults() { (response) in
+        if let dictionary = response as? NSDictionary {
+            self.dict = dictionary
+            self.tableView.reloadData()
+        }
+        }
         
         // should use getter
-        dict = youtubeBrain.jsonDict
+        // dict = youtubeBrain.jsonDict
         
         loadResults()
         
@@ -65,6 +85,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         // searchResults.delegate = self
         // searchResults.dataSource = self
+        
+        // tableView.delegate = youtubeBrain
+        // tableView.dataSource = youtubeBrain
         
         // TODO get a search field ;)
         // self.searchResults.reloadData()
@@ -108,7 +131,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     //... json dict isnt sorted
     func loadResults(){
-        
         if(dict != nil && dict!.count != 0){
             for index in 0...dict!.count-1{
                 var id = dict!["items"]?[index]!["id"] as! NSDictionary
@@ -148,9 +170,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
+                //let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                // controller.detailItem = object
+                controller.detailItem = youtubeBrain.getIdStringForIndex(indexPath.row)
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -212,11 +235,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         else{
             
             //
-            //let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
+            // let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
             
             // cell.textLabel!.text = object.valueForKey("title")!.description
             // cell.textLabel!.text = titleString
+            
+            
             print(indexPath.row)
+            
             var titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
             cell.textLabel!.text = titleString

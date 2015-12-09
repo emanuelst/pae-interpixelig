@@ -15,6 +15,13 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var playerView: YTPlayerView!
     
+    //var detailItem: AnyObject? {
+    //    didSet {
+    //        // Update the view.
+    //        self.configureView()
+    //    }
+    //}
+    
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -32,13 +39,15 @@ class DetailViewController: UIViewController {
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
             if let label = self.detailDescriptionLabel {
-                label.text = detail.valueForKey("videoId")!.description
+                //label.text = detail.valueForKey("videoId")!.description#
+                label.text = "Description"
             }
         }
         
         if let player = self.playerView {
             if let detail = self.detailItem {
-                let videoId = detail.valueForKey("videoId")!.description
+                //let videoId = detail.valueForKey("videoId")!.description
+                let videoId = detailItem as! String
                 
                 let playerVars: [String: Int] = ["playsinline": 1]
                 player.loadWithVideoId(videoId, playerVars: playerVars)

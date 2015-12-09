@@ -33,7 +33,7 @@ class YoutubeBrain{
     // we assume we have a working internet connection
     // do a search, get results from url, parse and set dictionary
     // limited to ~500,000 per day!
-    func getSearchResults(searchstring: String = "pratersauna") {
+    func getSearchResults(searchstring: String = "pratersauna", callback: (NSDictionary) -> ()) {
         //we only get video results
         //todo escape searchstring
         //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
@@ -51,27 +51,13 @@ class YoutubeBrain{
             
             do {
                 self.jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+
             } catch {
                 //handle error
             }
-            //print(jsonDict!["items"]!)
-            //self.dictionary = jsonDict!["items"]! as! NSDictionary
-            //use swifty json?
-            //todo only request the needed datas
-            /*
-            for index in 0...4 {
-            var id = jsonDict!["items"]![index]!["id"]! as! NSDictionary
-            var snippet = jsonDict!["items"]![index]!["snippet"]! as! NSDictionary
             
-            print(id["videoId"])
-            print(snippet["title"])
-            }
-            */
             self.loaded=true
-            //self.loadResults()
-            
-            //todo --> get searchResults to insertNewObject...
-            //self.searchResults.reloadData()
+            callback(self.jsonDict)
         }
         task.resume()
     }
