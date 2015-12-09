@@ -39,7 +39,7 @@ class YoutubeBrain{
         //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
         //todo... send referer...
-        let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=\(key)"
+        let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&maxResults=50&key=\(key)"
         
         let escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         

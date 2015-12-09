@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class MasterViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
     
     var youtubeBrain = YoutubeBrain()
     
@@ -25,7 +25,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 
                 // we could also use dispatch_async here
                 // http://stackoverflow.com/a/26262409/841052
-                self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+                self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
     }
@@ -61,9 +61,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 
                 // we could also use dispatch_async here
                 // http://stackoverflow.com/a/26262409/841052
-                self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+                self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
+        
+        
         
     }
     
@@ -102,7 +104,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
+            if let indexPath = self.collectionView?.indexPathsForSelectedItems() {
                 //let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 
@@ -110,7 +112,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.brain = youtubeBrain
                 // todo --> pass vid id instead or create a video object...
                 // todo --> we can create a video object (for description, id and title), pass our brain and get comments via the vid Id !
-                controller.vidIndex = indexPath.row
+                // first selected object...
+                controller.vidIndex = indexPath.first?.row
                 
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
@@ -120,12 +123,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     // MARK: - Table View
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //return self.fetchedResultsController.sections?.count ?? 0
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //let sectionInfo = self.fetchedResultsController.sections![section]
         //does this return the correct number...
         
@@ -138,37 +141,21 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         //return sectionInfo.numberOfObjects
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+       // let cell = collectionView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
+
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
+
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let context = self.fetchedResultsController.managedObjectContext
-            context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-            
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                //print("Unresolved error \(error), \(error.userInfo)")
-                abort()
-            }
-        }
-    }
-    
-    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
+    func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
         
         if(dict == nil && dict!.count == 0){
-            cell.textLabel!.text = "xxx"
+            cell.label.text = "xxx"
+            
         }
         else{
             
@@ -183,7 +170,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
-            cell.textLabel!.text = titleString
+            cell.label.text = titleString
         }
     }
     
@@ -227,6 +214,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     var _fetchedResultsController: NSFetchedResultsController? = nil
     
+    /*
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()
     }
@@ -255,9 +243,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
     }
+    */
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.endUpdates()
+        //self.tableView.endUpdates()
     }
     
     /*
