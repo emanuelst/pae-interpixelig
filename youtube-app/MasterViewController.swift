@@ -20,7 +20,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         deleteAllData("Video")
         
         youtubeBrain.getSearchResults(searchField.text!) { (response) in
-            if let dictionary = response as? NSDictionary {
+            if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
                 // we could also use dispatch_async here
@@ -56,7 +56,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         //youtubeBrain.getSearchResults()
         
         youtubeBrain.getSearchResults() { (response) in
-            if let dictionary = response as? NSDictionary {
+            if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
                 // we could also use dispatch_async here
@@ -64,25 +64,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
-
         
-        // should use getter
-        // dict = youtubeBrain.jsonDict
-        
-        loadResults()
-        
-        // set tableview to our search results
-        
-        // searchResults.delegate = self
-        // searchResults.dataSource = self
-        
-        // tableView.delegate = youtubeBrain
-        // tableView.dataSource = youtubeBrain
-        
-        // TODO get a search field ;)
-        // self.searchResults.reloadData()
-        
-        deleteAllData("Video")
+        // deleteAllData("Video")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -115,22 +98,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
         } catch let error as NSError {
             print("Detele all data in \(entity) error : \(error) \(error.userInfo)")
-        }
-    }
-    
-    
-    //... json dict isnt sorted
-    func loadResults(){
-        if(dict != nil && dict!.count != 0){
-            for index in 0...dict!.count-1{
-                var id = dict!["items"]?[index]!["id"] as! NSDictionary
-                var title = dict!["items"]?[index]!["snippet"]! as! NSDictionary
-                
-                var idString = id["videoId"] as? String
-                var titleString = title["title"] as? String
-                
-                //insertNewObject(self, videoId: idString!, title: titleString!)
-            }
         }
     }
     
@@ -233,7 +200,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             
             print(indexPath.row)
             
-            var titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
+            let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
             cell.textLabel!.text = titleString
         }

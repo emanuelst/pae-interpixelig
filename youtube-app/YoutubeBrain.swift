@@ -39,14 +39,14 @@ class YoutubeBrain{
         //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
         //todo... send referer...
-        var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=\(key)"
+        let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&key=\(key)"
         
-        var escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        let escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        var nsurl = NSURL(string: escape!)
+        let nsurl = NSURL(string: escape!)
         let session = NSURLSession.sharedSession()
         // get JSON from URL and parse into dictionary
-        var task = session.dataTaskWithURL(nsurl!) {
+        let task = session.dataTaskWithURL(nsurl!) {
             (data, response, error) -> Void in
             
             do {
@@ -63,16 +63,16 @@ class YoutubeBrain{
     }
     
     func getIdStringForIndex(index: Int) -> String{
-        var id = jsonDict["items"]?[index]!["id"] as! NSDictionary
-        var idString = id["videoId"] as? String
+        let id = jsonDict["items"]?[index]!["id"] as! NSDictionary
+        let idString = id["videoId"] as? String
         
         return idString!
     }
     
     func getTitleStringForIndex(index: Int) ->
         String {
-        var title = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
-        var titleString = title["title"] as? String
+        let title = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
+        let titleString = title["title"] as? String
         
         return titleString!
     }
