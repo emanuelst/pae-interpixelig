@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class YoutubeBrain{
     
@@ -75,6 +76,14 @@ class YoutubeBrain{
         let titleString = title["title"] as? String
         
         return titleString!
+    }
+    
+    func getImageUrlForIndex(index: Int) -> String {
+        //we probably should not be doing that like this
+        let url = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
+        let imageurl = url["thumbnails"]?["high"]!!["url"] as? String
+                
+        return imageurl!
     }
     
     func getRelatedVideo(videoId: String){

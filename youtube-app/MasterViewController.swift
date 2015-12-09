@@ -12,11 +12,12 @@ import CoreData
 class MasterViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
     
     var youtubeBrain = YoutubeBrain()
-    
+
     @IBOutlet weak var searchField: UITextField!
     
-    @IBAction func searchChanged(sender: AnyObject) {
-        print(searchField.text)
+    
+    @IBAction func searchFieldChanged(sender: AnyObject) {
+         print(searchField.text)
        // deleteAllData("Video")
         
         youtubeBrain.getSearchResults(searchField.text!) { (response) in
@@ -28,7 +29,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                 self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
+
     }
+
     
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
@@ -64,8 +67,6 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                 self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
-        
-        
         
     }
     
@@ -171,6 +172,13 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
             cell.label.text = titleString
+            
+            var urlstring = youtubeBrain.getImageUrlForIndex(indexPath.row)
+            print (urlstring)
+            var url:NSURL = NSURL(string: urlstring)!
+            if let dataVar:NSData = NSData(contentsOfURL:url){
+                cell.image.image = UIImage(data: dataVar)
+            }
         }
     }
     
