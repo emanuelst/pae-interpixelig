@@ -19,29 +19,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         print(searchField.text)
         deleteAllData("Video")
         
-        //youtubeBrain.getSearchResults(searchField.text!)
         youtubeBrain.getSearchResults(searchField.text!) { (response) in
             if let dictionary = response as? NSDictionary {
-                
-                
                 self.dict = dictionary
-                print("dict...")
-                print(self.dict)
-                // self.loadResults()
-                self.tableView.reloadData()
-
+                
+                // we could also use dispatch_async here
+                // http://stackoverflow.com/a/26262409/841052
+                self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
-        
-        // should use getter
-        // dict = youtubeBrain.jsonDict
-        
-        // print(youtubeBrain.jsonDict)
-
-        
-        // is one ”searchChanged" too slow...
-      //  self.tableView.reloadData()
-        
     }
     
     var detailViewController: DetailViewController? = nil
@@ -70,11 +56,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         //youtubeBrain.getSearchResults()
         
         youtubeBrain.getSearchResults() { (response) in
-        if let dictionary = response as? NSDictionary {
-            self.dict = dictionary
-            self.tableView.reloadData()
+            if let dictionary = response as? NSDictionary {
+                self.dict = dictionary
+                
+                // we could also use dispatch_async here
+                // http://stackoverflow.com/a/26262409/841052
+                self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+            }
         }
-        }
+
         
         // should use getter
         // dict = youtubeBrain.jsonDict
