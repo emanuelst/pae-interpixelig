@@ -62,7 +62,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
 
                 let videoId = brain?.getIdStringForIndex(index)
                 
-                let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
+                let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "rel" : 0, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
                 player.loadWithVideoId(videoId, playerVars: playerVars)
             }
             //let videoId = "enXT2jgB5bs"
