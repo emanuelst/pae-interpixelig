@@ -45,20 +45,6 @@
                                     <rect key="frame" x="0.0" y="345" width="600" height="17"/>
                                 </variation>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vrL-pv-yVx" userLabel="relatedLeft">
-                                <rect key="frame" x="0.0" y="216" width="154" height="98"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <variation key="heightClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="-47" y="-36" width="54" height="86"/>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eou-ub-Ude" userLabel="relatedRight">
-                                <rect key="frame" x="446" y="216" width="154" height="98"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <variation key="heightClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="-29" width="59" height="61"/>
-                                </variation>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFC-aV-nGh" userLabel="RelatedView">
                                 <rect key="frame" x="20" y="72" width="565" height="514"/>
                                 <subviews>
@@ -100,8 +86,6 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="vrL-pv-yVx"/>
-                                <exclude reference="eou-ub-Ude"/>
                                 <exclude reference="nFC-aV-nGh"/>
                             </mask>
                             <mask key="constraints">
@@ -110,8 +94,6 @@
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="subviews">
-                                <include reference="vrL-pv-yVx"/>
-                                <include reference="eou-ub-Ude"/>
                                 <include reference="AX7-kB-OqT"/>
                             </mask>
                             <mask key="constraints">
