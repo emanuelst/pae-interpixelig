@@ -43,7 +43,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         // Do any additional setup after loading the view, typically from a nib.
         // self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        //let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         // self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -80,6 +80,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         // Dispose of any resources that can be recreated.
     }
     
+    /*
     func insertNewObject(sender: AnyObject, videoId: String, title: String) {
         let context = self.fetchedResultsController.managedObjectContext
         let entity = self.fetchedResultsController.fetchRequest.entity!
@@ -99,7 +100,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             //print("Unresolved error \(error), \(error.userInfo)")
             abort()
         }
-    }
+    }*/
     
     // MARK: - Segues
     
@@ -144,12 +145,26 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
        // let cell = collectionView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
+        //let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
 
+        //self.configureCell(cell, atIndexPath: indexPath)
+        //return cell
+        
+        let cell:VideoCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
         self.configureCell(cell, atIndexPath: indexPath)
+        
         return cell
     }
     
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        for view in collectionView!.visibleCells(){
+            let view:VideoCell = view as! VideoCell
+            let yOffset:CGFloat = ((collectionView!.contentOffset.y - view.frame.origin.y) / 200) * 25
+            view.setImageOffset(CGPointMake(0, yOffset))
+        }
+    }
 
     
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
@@ -168,17 +183,22 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             
             
             print(indexPath.row)
-            
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
             cell.label.text = titleString
             
-            var urlstring = youtubeBrain.getImageUrlForIndex(indexPath.row)
+
+            let urlstring = youtubeBrain.getImageUrlForIndex(indexPath.row)
             print (urlstring)
-            var url:NSURL = NSURL(string: urlstring)!
+            let url:NSURL = NSURL(string: urlstring)!
+            
             if let dataVar:NSData = NSData(contentsOfURL:url){
-                cell.image.image = UIImage(data: dataVar)
+                cell.image = UIImage(data: dataVar)
             }
+            
+            let yOffset:CGFloat = ((collectionView!.contentOffset.y - cell.frame.origin.y) / 200) * 25
+            cell.imageOffset = CGPointMake(0, yOffset)
+
         }
     }
     

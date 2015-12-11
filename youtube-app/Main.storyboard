@@ -39,7 +39,7 @@
                                 <rect key="frame" x="0.0" y="346" width="600" height="17"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" size="system"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="0.0" y="345" width="600" height="17"/>
@@ -170,9 +170,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="367" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hqdefault" translatesAutoresizingMaskIntoConstraints="NO" id="4kh-QG-BBY">
-                                            <rect key="frame" x="0.0" y="0.0" width="367" height="98"/>
-                                        </imageView>
                                         <label userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjs-7K-eHB">
                                             <rect key="frame" x="8" y="69" width="351" height="21"/>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -186,16 +183,11 @@
                                 </view>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="4kh-QG-BBY" firstAttribute="height" secondItem="7qn-fk-su3" secondAttribute="height" id="1jJ-Ms-tjo"/>
                                     <constraint firstAttribute="leadingMargin" secondItem="Yjs-7K-eHB" secondAttribute="leading" id="EMA-tF-nVV"/>
-                                    <constraint firstItem="4kh-QG-BBY" firstAttribute="centerX" secondItem="7qn-fk-su3" secondAttribute="centerX" id="FBK-ls-W9c"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="Yjs-7K-eHB" secondAttribute="trailing" id="JtY-Rv-nvP"/>
-                                    <constraint firstItem="4kh-QG-BBY" firstAttribute="centerY" secondItem="7qn-fk-su3" secondAttribute="centerY" id="Qrz-3q-XOd"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="Yjs-7K-eHB" secondAttribute="bottom" id="l5B-zD-Sxv"/>
-                                    <constraint firstItem="4kh-QG-BBY" firstAttribute="width" secondItem="7qn-fk-su3" secondAttribute="width" id="oC8-dI-e8v"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="image" destination="4kh-QG-BBY" id="7z1-8f-V2c"/>
                                     <outlet property="label" destination="Yjs-7K-eHB" id="N3F-gA-s82"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="0Dz-sx-DLn"/>
                                 </connections>
@@ -227,9 +219,6 @@
             <point key="canvasLocation" x="709" y="-732"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="hqdefault" width="480" height="360"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0Dz-sx-DLn"/>
     </inferredMetricsTieBreakers>
