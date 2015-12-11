@@ -193,11 +193,12 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             let url:NSURL = NSURL(string: urlstring)!
             
             if let dataVar:NSData = NSData(contentsOfURL:url){
+                
+                let yOffset:CGFloat = ((collectionView!.contentOffset.y - cell.frame.origin.y) / 200) * 25
+                cell.imageOffset = CGPointMake(0, yOffset)
+                
                 cell.image = UIImage(data: dataVar)
             }
-            
-            let yOffset:CGFloat = ((collectionView!.contentOffset.y - cell.frame.origin.y) / 200) * 25
-            cell.imageOffset = CGPointMake(0, yOffset)
 
         }
     }
