@@ -13,6 +13,8 @@
 		E0650BAD1C14800700C01495 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0650BAC1C14800700C01495 /* Main.storyboard */; };
 		E0650BEF1C1483E200C01495 /* youtube-app.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E0650BED1C1483E200C01495 /* youtube-app.xcdatamodeld */; };
 		E0A450F51C18BFD0009BD1FA /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A450F41C18BFD0009BD1FA /* VideoCell.swift */; };
+		E0B1BABC1C1DD90700F25573 /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B1BABB1C1DD90700F25573 /* AutoCompleteTextField.swift */; };
+		E0B1BABE1C1DF64200F25573 /* TappableSubviewNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B1BABD1C1DF64200F25573 /* TappableSubviewNavBar.swift */; };
 		E0DB3E831C14ED9B00AA691F /* YoutubeBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DB3E821C14ED9B00AA691F /* YoutubeBrain.swift */; };
 		E0E69B9A1BF527BF003870D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E69B991BF527BF003870D1 /* AppDelegate.swift */; };
 		E0E69BA31BF527C0003870D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0E69BA21BF527C0003870D1 /* Assets.xcassets */; };
@@ -49,6 +51,8 @@
 		E0650BEB1C1483BA00C01495 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E0650BEE1C1483E200C01495 /* youtube-app.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "youtube-app.xcdatamodel"; sourceTree = "<group>"; };
 		E0A450F41C18BFD0009BD1FA /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		E0B1BABB1C1DD90700F25573 /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
+		E0B1BABD1C1DF64200F25573 /* TappableSubviewNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableSubviewNavBar.swift; sourceTree = "<group>"; };
 		E0DB3E821C14ED9B00AA691F /* YoutubeBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeBrain.swift; sourceTree = "<group>"; };
 		E0E69B961BF527BF003870D1 /* youtube-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "youtube-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E69B991BF527BF003870D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -138,12 +142,14 @@
 				E0F35DC61BF58DF800A80F9D /* .gitignore */,
 				E0E69B991BF527BF003870D1 /* AppDelegate.swift */,
 				E0650BAC1C14800700C01495 /* Main.storyboard */,
+				E0B1BABD1C1DF64200F25573 /* TappableSubviewNavBar.swift */,
 				E0E69BA21BF527C0003870D1 /* Assets.xcassets */,
 				E0E69BA41BF527C0003870D1 /* LaunchScreen.storyboard */,
 				E0E69BA71BF527C0003870D1 /* Info.plist */,
 				E0F35DC81BF58E8D00A80F9D /* keys.plist */,
 				E0650BA61C147F7000C01495 /* MasterViewController.swift */,
 				E0A450F41C18BFD0009BD1FA /* VideoCell.swift */,
+				E0B1BABB1C1DD90700F25573 /* AutoCompleteTextField.swift */,
 				E0DB3E821C14ED9B00AA691F /* YoutubeBrain.swift */,
 				E0650BA81C147F8400C01495 /* DetailViewController.swift */,
 				E0650BED1C1483E200C01495 /* youtube-app.xcdatamodeld */,
@@ -356,9 +362,11 @@
 			files = (
 				E0650BA71C147F7000C01495 /* MasterViewController.swift in Sources */,
 				E0A450F51C18BFD0009BD1FA /* VideoCell.swift in Sources */,
+				E0B1BABC1C1DD90700F25573 /* AutoCompleteTextField.swift in Sources */,
 				E0650BEF1C1483E200C01495 /* youtube-app.xcdatamodeld in Sources */,
 				E0DB3E831C14ED9B00AA691F /* YoutubeBrain.swift in Sources */,
 				E0650BA91C147F8400C01495 /* DetailViewController.swift in Sources */,
+				E0B1BABE1C1DF64200F25573 /* TappableSubviewNavBar.swift in Sources */,
 				E0E69B9A1BF527BF003870D1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

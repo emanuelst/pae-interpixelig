@@ -15,13 +15,6 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     
     @IBOutlet weak var playerView: YTPlayerView!
     
-    //var detailItem: AnyObject? {
-    //    didSet {
-    //        // Update the view.
-    //        self.configureView()
-    //    }
-    //}
-    
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -59,7 +52,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
             if let index = self.vidIndex {
                 //let videoId = detail.valueForKey("videoId")!.description
                 playerView.delegate = self
-
+                
                 let videoId = brain?.getIdStringForIndex(index)
                 
                 let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "rel" : 0, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
@@ -73,7 +66,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         print("ready")
         playerView.playVideo()
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

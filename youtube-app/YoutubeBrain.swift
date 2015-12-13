@@ -34,13 +34,12 @@ class YoutubeBrain{
     // we assume we have a working internet connection
     // do a search, get results from url, parse and set dictionary
     // limited to ~500,000 per day!
-    func getSearchResults(searchstring: String = "pratersauna", callback: (NSDictionary) -> ()) {
+    func getSearchResults(searchstring: String = "", callback: (NSDictionary) -> ()) {
         //we only get video results
         //todo escape searchstring
         //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        //todo... send referer...
-        let maxResults = 50
+        let maxResults = 10
         
         let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&maxResults=\(maxResults)&key=\(key)"
         
@@ -54,7 +53,7 @@ class YoutubeBrain{
             
             do {
                 self.jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
-
+                
             } catch {
                 //handle error
             }
@@ -74,17 +73,17 @@ class YoutubeBrain{
     
     func getTitleStringForIndex(index: Int) ->
         String {
-        let title = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
-        let titleString = title["title"] as? String
-        
-        return titleString!
+            let title = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
+            let titleString = title["title"] as? String
+            
+            return titleString!
     }
     
     func getImageUrlForIndex(index: Int) -> String {
         //we probably should not be doing that like this
         let url = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
         let imageurl = url["thumbnails"]?["high"]!!["url"] as? String
-                
+        
         return imageurl!
     }
     
