@@ -79,8 +79,8 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     
     public override func willMoveToSuperview(newSuperview: UIView?) {
         super.willMoveToSuperview(newSuperview)
-        commonInit()
-        //setupAutocompleteTable(newSuperview!)
+        // commonInit()
+        // setupAutocompleteTable(newSuperview!)
     }
     
     private func commonInit(){

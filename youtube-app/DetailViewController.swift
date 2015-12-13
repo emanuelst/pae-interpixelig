@@ -55,6 +55,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
                 
                 let videoId = brain?.getIdStringForIndex(index)
                 
+                //TODO closed captions?
                 let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "rel" : 0, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
                 player.loadWithVideoId(videoId, playerVars: playerVars)
             }
@@ -77,7 +78,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    /*
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         if UIDevice.currentDevice().orientation.isLandscape.boolValue {
             print("landscape")
@@ -89,7 +90,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
             self.navigationController?.navigationBarHidden = false
         }
     }
-    
+    */
     
 }
 

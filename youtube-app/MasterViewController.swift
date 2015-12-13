@@ -159,6 +159,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         
         autoCompleteTextField.onSelect = {[weak self] text, indexpath in
             
+            //TODO display spinner on our collectionView
             let selectedSuggestion = self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]
             print(selectedSuggestion)
             
