@@ -14,6 +14,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
     @IBOutlet weak var playerView: YTPlayerView!
+    @IBOutlet weak var relatedVideosCollectionView: UICollectionView!
     
     var dict: NSDictionary? = nil
     
@@ -88,11 +89,77 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
                 
                 // we could also use dispatch_async here
                 // http://stackoverflow.com/a/26262409/841052
-                //self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+                self.relatedVideosCollectionView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
         
     }
+    
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        //return self.fetchedResultsController.sections?.count ?? 0
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //let sectionInfo = self.fetchedResultsController.sections![section]
+        //does this return the correct number...
+        
+        if(dict != nil && dict!.count != 0){
+            return dict!["items"]!.count
+        }
+        else {
+            return 0
+        }
+        //return sectionInfo.numberOfObjects
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        // let cell = collectionView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        //let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
+        
+        //self.configureCell(cell, atIndexPath: indexPath)
+        //return cell
+        
+        let cell:VideoCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
+        self.configureCell(cell, atIndexPath: indexPath)
+        
+        return cell
+    }
+    
+    func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
+        
+        if(dict == nil && dict!.count == 0){
+            cell.label.text = "xxx"
+            
+        }
+        else{
+            
+            //
+            // let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
+            
+            // cell.textLabel!.text = object.valueForKey("title")!.description
+            // cell.textLabel!.text = titleString
+            
+            
+            print(indexPath.row)
+            let titleString = brain!.getTitleStringForIndex(indexPath.row)
+            
+            cell.label.text = titleString
+            
+            
+            let urlstring = brain!.getImageUrlForIndex(indexPath.row)
+            print (urlstring)
+            let url:NSURL = NSURL(string: urlstring)!
+            
+            if let dataVar:NSData = NSData(contentsOfURL:url){
+                
+                cell.image = UIImage(data: dataVar)
+            }
+            
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
