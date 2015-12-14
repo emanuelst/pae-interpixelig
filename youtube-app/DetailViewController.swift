@@ -85,7 +85,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
-                print(self.dict)
+                // print(self.dict)
                 
                 // we could also use dispatch_async here
                 // http://stackoverflow.com/a/26262409/841052
@@ -140,13 +140,11 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
             
             // cell.textLabel!.text = object.valueForKey("title")!.description
             // cell.textLabel!.text = titleString
-            
-            
+               
             print(indexPath.row)
             let titleString = brain!.getTitleStringForIndex(indexPath.row)
             
             cell.label.text = titleString
-            
             
             let urlstring = brain!.getImageUrlForIndex(indexPath.row)
             print (urlstring)
