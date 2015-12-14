@@ -95,12 +95,18 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     }
     
     func addBlur(){
-        let blurEffect: UIBlurEffect = UIBlurEffect(style: .Light)
-        visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView = UIVisualEffectView()
         
-        // frame is calculated in didLayoutSubviews
-        // visualEffectView.frame = self.collectionView!.bounds
+        // frame is also calculated in didLayoutSubviews
+        visualEffectView.frame = self.collectionView!.bounds
         self.collectionView!.addSubview(visualEffectView)
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
+            self.visualEffectView.effect = UIBlurEffect(style: .Light)
+
+            }, completion: { finished in
+                //print("animation finished")
+        })
         
         // add touch recognizer
         let gesture = UITapGestureRecognizer(target: self, action: "removeBlur")
