@@ -118,7 +118,14 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     func scrollToTop(){
         let indexPath = NSIndexPath(forItem: 0, inSection: 0)
         collectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
-        //fix parallax offsets
+        
+        //fix parallax offsets, same code as in scrollViewDidScroll
+        for view in collectionView!.visibleCells(){
+            let view:VideoCell = view as! VideoCell
+            // view.frame.origin.y = 0...
+            let yOffset:CGFloat = ((collectionView!.contentOffset.y - 0) / 200) * 25
+            view.setImageOffset(CGPointMake(0, yOffset))
+        }
     }
     
     /* from https://github.com/mnbayan/autoCompleteTextFieldSwift */
