@@ -95,6 +95,22 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
+            flowLayout.itemSize = CGSize(width: view.frame.size.width / 3.0, height: view.frame.size.width * 3.0 / 16.0)
+        } else {
+            flowLayout.itemSize = CGSize(width: view.frame.size.width, height: view.frame.size.width * 9.0 / 16.0)
+        }
+        
+        flowLayout.invalidateLayout()
+    }
+    
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //return self.fetchedResultsController.sections?.count ?? 0
@@ -127,33 +143,25 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        let leftRightInset = self.view.frame.size.width / 14.0
+        return UIEdgeInsetsMake(0, leftRightInset, 0, leftRightInset)
+    }
+    
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
         
-        if(dict == nil && dict!.count == 0){
-            cell.label.text = "xxx"
+        print(indexPath.row)
+        let titleString = brain!.getTitleStringForIndex(indexPath.row)
+        
+        cell.label.text = titleString
+        
+        let urlstring = brain!.getImageUrlForIndex(indexPath.row)
+        print (urlstring)
+        let url:NSURL = NSURL(string: urlstring)!
+        
+        if let dataVar:NSData = NSData(contentsOfURL:url){
             
-        }
-        else{
-            
-            //
-            // let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-            
-            // cell.textLabel!.text = object.valueForKey("title")!.description
-            // cell.textLabel!.text = titleString
-               
-            print(indexPath.row)
-            let titleString = brain!.getTitleStringForIndex(indexPath.row)
-            
-            cell.label.text = titleString
-            
-            let urlstring = brain!.getImageUrlForIndex(indexPath.row)
-            print (urlstring)
-            let url:NSURL = NSURL(string: urlstring)!
-            
-            if let dataVar:NSData = NSData(contentsOfURL:url){
-                
-                cell.image = UIImage(data: dataVar)
-            }
+            cell.image = UIImage(data: dataVar)
             
         }
     }
