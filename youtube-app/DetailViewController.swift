@@ -15,6 +15,8 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     
     @IBOutlet weak var playerView: YTPlayerView!
     
+    var dict: NSDictionary? = nil
+    
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -72,6 +74,24 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
+        
+        let videoId = brain?.getIdStringForIndex(vidIndex!)
+        
+        print(videoId)
+        
+        //get search results... refactor to method if possible?
+        brain!.getSearchResults("relatedToVideoId="+videoId!) { (response) in
+            if let dictionary = response as NSDictionary? {
+                self.dict = dictionary
+                
+                print(self.dict)
+                
+                // we could also use dispatch_async here
+                // http://stackoverflow.com/a/26262409/841052
+                //self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+            }
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
