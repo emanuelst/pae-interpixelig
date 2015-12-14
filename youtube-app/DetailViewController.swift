@@ -61,7 +61,6 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     }
     
     func playerViewDidBecomeReady(playerView: YTPlayerView!){
-        print("ready")
         playerView.playVideo()
     }
     
@@ -71,8 +70,6 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         self.configureView()
         
         let videoId = youtubeBrain.getIdStringForIndex(vidIndex!)
-        
-        print(videoId)
         
         youtubeBrain.getRelatedVideos(videoId) { (response) in
             if let dictionary = response as NSDictionary? {

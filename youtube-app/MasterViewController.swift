@@ -36,7 +36,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     //TODO we might want to add an overlay or button to exit out of the "search mode"
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let enteredText = textField.text
-        print(enteredText)
+        //print(enteredText)
         textField.resignFirstResponder();
         
         //get search results... refactor to method if possible?
@@ -156,7 +156,6 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             
             //if theres no blur onTextChange, we add one
             if !self!.collectionView!.subviews.contains(self!.visualEffectView){
-                print("it does contain one")
                 self!.performSelectorOnMainThread(Selector("addBlur"), withObject: nil, waitUntilDone: true)
             }
             
@@ -186,7 +185,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                         var suggestionArray = [String]()
                         
                         for suggestion in suggestionList {
-                            print(suggestion)
+                            //print(suggestion)
                             suggestionArray.append(suggestion as! String)
                         }
                         
@@ -207,7 +206,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         autoCompleteTextField.onSelect = {[weak self] text, indexpath in
             //TODO display spinner on our collectionView
             let selectedSuggestion = self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]
-            print(selectedSuggestion)
+            //print(selectedSuggestion)
             
             self?.autoCompleteTextField.text = selectedSuggestion
             
@@ -388,7 +387,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                 var suggestionArray = [String]()
                 
                 for suggestion in suggestionList {
-                    print(suggestion)
+                    //print(suggestion)
                     suggestionArray.append(suggestion as! String)
                 }
                 

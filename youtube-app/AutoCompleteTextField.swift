@@ -143,7 +143,7 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
             if indexPath.row < attributedAutoCompleteStrings!.count {
                 cell?.textLabel?.attributedText = attributedAutoCompleteStrings![indexPath.row]
             } else {
-                print("this fixes our fatal error: Array index out of range")
+                // print("this fixes our fatal error: Array index out of range")
             }
         }
         else{
@@ -225,9 +225,9 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     
     public func textFieldShouldReturn(textField: UITextField) -> Bool {
         onTextFieldShouldReturn(text!)
-        print(text!)
-        //hide tableView
-        //TODO should the tableView reappear when the textField becomes active again?
+        // print(text!)
+        // hide tableView
+        // TODO should the tableView reappear when the textField becomes active again?
         self.autoCompleteTableView?.hidden = true
         textField.resignFirstResponder()
         
