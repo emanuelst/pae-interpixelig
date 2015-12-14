@@ -110,7 +110,7 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
         
         autoCompleteTableView = tableView
         
-        autoCompleteTableHeight = 100.0
+        autoCompleteTableHeight = 200.0
     }
     
     private func redrawTable(){
@@ -226,5 +226,11 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
         textField.resignFirstResponder()
         
         return true
+    }
+    
+    override public func endEditing(force: Bool) -> Bool {
+        self.autoCompleteTableView?.hidden = true
+        return super.endEditing(force)
+
     }
 }

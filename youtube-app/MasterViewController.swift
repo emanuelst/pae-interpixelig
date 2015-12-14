@@ -62,9 +62,6 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         configureTextField()
         handleTextFieldInterfaces()
         
-        // move cursor to textField
-        autoCompleteTextField.becomeFirstResponder()
-        
         let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "moveCursorToSearch:")
         self.navigationItem.rightBarButtonItem = searchButton
         
@@ -99,15 +96,22 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     func addBlur(){
         let blurEffect: UIBlurEffect = UIBlurEffect(style: .Light)
-        visualEffectView = TappableVisualEffectView(effect: blurEffect)
+        visualEffectView = UIVisualEffectView(effect: blurEffect)
         
         visualEffectView.frame = self.collectionView!.bounds
         self.collectionView!.addSubview(visualEffectView)
+        
+        // add touch recognizer
+        let gesture = UITapGestureRecognizer(target: self, action: "removeBlur")
+        self.visualEffectView.addGestureRecognizer(gesture)
         
     }
     
     func removeBlur(){
         visualEffectView.removeFromSuperview()
+        autoCompleteTextField.endEditing(true)
+        //dismiss keyboard & put cursor out of textField
+        //autoCompleteTextField.resignFirstResponder()
     }
     
     /* from https://github.com/mnbayan/autoCompleteTextFieldSwift */
