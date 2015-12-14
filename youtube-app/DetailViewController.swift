@@ -96,9 +96,9 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         }
         
         if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
-            flowLayout.itemSize = CGSize(width: view.frame.size.width / 3.0, height: view.frame.size.width * 3.0 / 16.0)
+            flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width / 3.0, height: relatedVideosCollectionView.frame.size.height / 3.0)
         } else {
-            flowLayout.itemSize = CGSize(width: view.frame.size.width, height: view.frame.size.width * 9.0 / 16.0)
+            flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width, height: relatedVideosCollectionView.frame.size.width * 9.0 / 16.0)
         }
         
         flowLayout.invalidateLayout()
