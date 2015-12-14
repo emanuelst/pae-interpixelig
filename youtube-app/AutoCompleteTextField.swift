@@ -26,7 +26,7 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     public var onTextFieldDidBeginEditing:(String)->() = {_ in}
     
     /// Font for the text suggestions
-    public var autoCompleteTextFont = UIFont(name: "HelveticaNeue-Light", size: 12)
+    public var autoCompleteTextFont = UIFont(name: "HelveticaNeue-Light", size: 14)
     /// Color of the text suggestions
     public var autoCompleteTextColor = UIColor.blackColor()
     /// Used to set the height of cell for each suggestions
@@ -95,7 +95,7 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     private func commonInit(){
         hidesWhenEmpty = true
         autoCompleteAttributes = [NSForegroundColorAttributeName:UIColor.blackColor()]
-        autoCompleteAttributes![NSFontAttributeName] = UIFont(name: "HelveticaNeue-Bold", size: 12)
+        autoCompleteAttributes![NSFontAttributeName] = UIFont(name: "HelveticaNeue-Bold", size: 14)
         self.clearButtonMode = .Always
         self.addTarget(self, action: "textFieldDidChange", forControlEvents: .EditingChanged)
     }
@@ -179,7 +179,7 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     //MARK: - Private Interface
     private func reload(){
         if enableAttributedText{
-            let attrs = [NSForegroundColorAttributeName:autoCompleteTextColor, NSFontAttributeName:UIFont.systemFontOfSize(12.0)]
+            let attrs = [NSForegroundColorAttributeName:autoCompleteTextColor, NSFontAttributeName:UIFont.systemFontOfSize(14.0)]
             if attributedAutoCompleteStrings == nil{
                 attributedAutoCompleteStrings = [NSAttributedString]()
             }

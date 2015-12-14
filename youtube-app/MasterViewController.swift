@@ -119,7 +119,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     private func configureTextField(){
         autoCompleteTextField.autoCompleteTextColor = UIColor(red: 128.0/255.0, green: 128.0/255.0, blue: 128.0/255.0, alpha: 1.0)
-        autoCompleteTextField.autoCompleteTextFont = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+        autoCompleteTextField.autoCompleteTextFont = UIFont(name: "HelveticaNeue-Light", size: 14.0)
         autoCompleteTextField.autoCompleteCellHeight = 35.0
         autoCompleteTextField.maximumAutoCompleteCount = 20
         autoCompleteTextField.hidesWhenSelected = true
@@ -127,7 +127,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         autoCompleteTextField.enableAttributedText = true
         var attributes = [String:AnyObject]()
         attributes[NSForegroundColorAttributeName] = UIColor.blackColor()
-        attributes[NSFontAttributeName] = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
+        attributes[NSFontAttributeName] = UIFont(name: "HelveticaNeue-Bold", size: 14.0)
         autoCompleteTextField.autoCompleteAttributes = attributes
     }
     
