@@ -309,33 +309,35 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             cell.label.text = "xxx"
             
         }
-        else{
-            
-            //
-            // let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-            
-            // cell.textLabel!.text = object.valueForKey("title")!.description
-            // cell.textLabel!.text = titleString
-            
-            
+        else {
             print(indexPath.row)
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
             cell.label.text = titleString
             
             
-            let urlstring = youtubeBrain.getImageUrlForIndex(indexPath.row)
-            print (urlstring)
-            let url:NSURL = NSURL(string: urlstring)!
+            let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.row))!
+            cell.imageUrl = url
             
-            if let dataVar:NSData = NSData(contentsOfURL:url){
-                
-                let yOffset:CGFloat = ((collectionView!.contentOffset.y - cell.frame.origin.y) / 200) * 25
-                cell.imageOffset = CGPointMake(0, yOffset)
-                
-                cell.image = UIImage(data: dataVar)
+            // Image loading.
+            // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
+            if let image = url.cachedImage {
+                // Cached: set immediately.
+                cell.imageView.image = image
+                cell.imageView.alpha = 1
+            } else {
+                // Not cached, so load then fade it in.
+                cell.imageView.alpha = 0
+                url.fetchImage { image in
+                    // Check the cell hasn't recycled while loading.
+                    if cell.imageUrl == url {
+                        cell.imageView.image = image
+                        UIView.animateWithDuration(0.3) {
+                            cell.imageView.alpha = 1
+                        }
+                    }
+                }
             }
-            
         }
     }
     
@@ -383,10 +385,10 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         guard let effectView = visualEffectView as UIVisualEffectView? else {
             return
         }
-
+        
         effectView.frame = self.collectionView!.bounds
-
+        
     }
-
+    
 }
 

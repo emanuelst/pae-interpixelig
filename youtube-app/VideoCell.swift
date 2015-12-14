@@ -14,6 +14,8 @@ class VideoCell: UICollectionViewCell {
         
     var imageView: UIImageView!
     
+    var imageUrl: NSURL!
+    
     // Offset to Create parallax Effect
     var imageOffset:CGPoint!
     
