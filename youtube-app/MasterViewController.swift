@@ -98,7 +98,8 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         let blurEffect: UIBlurEffect = UIBlurEffect(style: .Light)
         visualEffectView = UIVisualEffectView(effect: blurEffect)
         
-        visualEffectView.frame = self.collectionView!.bounds
+        // frame is calculated in didLayoutSubviews
+        // visualEffectView.frame = self.collectionView!.bounds
         self.collectionView!.addSubview(visualEffectView)
         
         // add touch recognizer
@@ -399,9 +400,21 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         print("Error: \(error.localizedDescription)")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        // set frame for visual effect view
+        guard let effectView = visualEffectView as UIVisualEffectView? else {
+            return
+        }
+
+        effectView.frame = self.collectionView!.bounds
+
+    }
     
     // MARK: - Fetched results controller
     
+    /*
     var fetchedResultsController: NSFetchedResultsController {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
@@ -438,7 +451,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         return _fetchedResultsController!
     }
     var _fetchedResultsController: NSFetchedResultsController? = nil
-    
+    */
     /*
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
     self.tableView.beginUpdates()
