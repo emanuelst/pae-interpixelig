@@ -249,7 +249,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 
                 // controller.detailItem = object
-                controller.brain = youtubeBrain
+                controller.youtubeBrain = self.youtubeBrain
                 // todo --> pass vid id instead or create a video object...
                 // todo --> we can create a video object (for description, id and title), pass our brain and get comments via the vid Id !
                 // first selected object...
@@ -310,11 +310,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             
         }
         else {
-            print(indexPath.row)
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
             cell.label.text = titleString
-            
             
             let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.row))!
             cell.imageUrl = url
