@@ -54,6 +54,12 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
             redrawTable()
         }
     }
+    /// The table view height
+    public var autoCompleteTableWidth:CGFloat?{
+        didSet{
+            redrawTable()
+        }
+    }
     /// The strings to be shown on as suggestions, setting the value of this automatically reload the tableview
     public var autoCompleteStrings:[String]?{
         didSet{
@@ -102,21 +108,20 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
         tableView.rowHeight = autoCompleteCellHeight
         tableView.hidden = hidesWhenEmpty ?? true
         
-        //print("superView:\(view)")
-        //print("subViews:\(view.superview?.subviews)")
         view.addSubview(tableView)
-        //view.superview?.bringSubviewToFront(view)
-        //view.bringSubviewToFront(tableView)
         
         autoCompleteTableView = tableView
         
         autoCompleteTableHeight = 200.0
+        autoCompleteTableWidth = screenSize.width
+
     }
     
     private func redrawTable(){
         if autoCompleteTableView != nil{
             var newFrame = autoCompleteTableView!.frame
             newFrame.size.height = autoCompleteTableHeight!
+            newFrame.size.width = autoCompleteTableWidth ?? 200.0 //default value...
             autoCompleteTableView!.frame = newFrame
         }
     }

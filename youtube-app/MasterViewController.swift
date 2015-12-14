@@ -385,7 +385,13 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
         
         effectView.frame = self.collectionView!.bounds
-        
+    }
+    
+    // todo: when starting in landscape, initalize correctly...
+    // todo, move this functionality to --> AutoCompleteTextField.swift?
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        self.autoCompleteTextField.autoCompleteTableWidth = size.width
     }
     
 }
