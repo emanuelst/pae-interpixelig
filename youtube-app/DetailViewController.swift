@@ -116,13 +116,14 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         //return self.fetchedResultsController.sections?.count ?? 0
         return 1
     }
+
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //let sectionInfo = self.fetchedResultsController.sections![section]
         //does this return the correct number...
         
         if(dict != nil && dict!.count != 0){
-            return dict!["items"]!.count
+            return dict!["items"]!.count <= 9 ? dict!["items"]!.count : 9
         }
         else {
             return 0
@@ -141,11 +142,6 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         self.configureCell(cell, atIndexPath: indexPath)
         
         return cell
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        let leftRightInset = self.view.frame.size.width / 14.0
-        return UIEdgeInsetsMake(0, leftRightInset, 0, leftRightInset)
     }
     
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
