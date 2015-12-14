@@ -34,14 +34,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     
     var brain: YoutubeBrain?
     
-    func configureView() {
-        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-            print("landscape")
-            self.navigationController?.hidesBarsWhenVerticallyCompact = true
-            self.navigationController?.navigationBarHidden = true
-        }
-        
-        
+    func configureView() {        
         // Update the user interface for the detail item.
         if let index = self.vidIndex {
             if let label = self.detailDescriptionLabel {
