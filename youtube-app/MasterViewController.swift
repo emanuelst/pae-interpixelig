@@ -158,7 +158,6 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
         
         autoCompleteTextField.onSelect = {[weak self] text, indexpath in
-            
             //TODO display spinner on our collectionView
             let selectedSuggestion = self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]
             print(selectedSuggestion)
@@ -176,12 +175,8 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             }
         }
         
-        
         autoCompleteTextField.onTextFieldShouldReturn = {[weak self] text in
-            
-            
-            
-            self!.youtubeBrain.getSearchResults(text) { (response) in
+            self!.youtubeBrain.getSearchResults("q="+text) { (response) in
                 if let dictionary = response as NSDictionary? {
                     self!.dict = dictionary
                     
