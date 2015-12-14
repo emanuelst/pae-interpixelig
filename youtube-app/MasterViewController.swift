@@ -115,6 +115,12 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         //autoCompleteTextField.resignFirstResponder()
     }
     
+    func scrollToTop(){
+        let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+        collectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        //fix parallax offsets
+    }
+    
     /* from https://github.com/mnbayan/autoCompleteTextFieldSwift */
     
     private func configureTextField(){
@@ -205,8 +211,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                     // we could also use dispatch_async here
                     // http://stackoverflow.com/a/26262409/841052
                     self!.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
-                    
                     self!.performSelectorOnMainThread(Selector("removeBlur"), withObject: nil, waitUntilDone: true)
+                    self!.performSelectorOnMainThread(Selector("scrollToTop"), withObject: nil, waitUntilDone: true)
+
                     
                 }
             }
@@ -220,9 +227,8 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                     // we could also use dispatch_async here
                     // http://stackoverflow.com/a/26262409/841052
                     self!.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
-                    
                     self!.performSelectorOnMainThread(Selector("removeBlur"), withObject: nil, waitUntilDone: true)
-                    
+                    self!.performSelectorOnMainThread(Selector("scrollToTop"), withObject: nil, waitUntilDone: true)
                 }
             }
             
