@@ -234,6 +234,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="autoCompleteTextField" destination="Owo-eF-ySt" id="yP8-kB-Wmv"/>
+                        <outlet property="collectionView" destination="BYk-Le-mG9" id="yDa-u2-nTV"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qzw-KG-a6v" userLabel="First Responder" sceneMemberID="firstResponder"/>

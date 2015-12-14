@@ -31,6 +31,10 @@ class YoutubeBrain{
         key = keys?["youtubeApiKey"] as! String
     }
     
+    func getRelatedVideos(searchstring: String = "", callback: (NSDictionary) -> ()) {
+        // Not yet implemented
+    }
+    
     // we assume we have a working internet connection
     // do a search, get results from url, parse and set dictionary
     // limited to ~500,000 per day!
