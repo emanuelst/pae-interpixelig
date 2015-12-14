@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1227CA8AD1FDE78BF88297AFF37D6B68 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047858D0CB0FF6CEA3782F1C0F021CCF /* YTPlayerView.m */; };
+		2B7F5EABC8EFF7E1E8EA1CC1AE113527 /* Assets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 05A42654CE50956F8112FF713182D899 /* Assets.bundle */; };
 		6B87672D1E06E3BA73F81AC32D95F8F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
 		6C9720272D70A901C7DC0A84B786E4F0 /* Pods-youtube-app-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 20987A7120CC88B38A4FF009D5F78A97 /* Pods-youtube-app-dummy.m */; };
 		8F14865E7B3BDAE838B412488618D24A /* YTPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = C633248D5F947960D1989D74E2094E2D /* YTPlayerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -302,7 +303,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E019C7021BF54B8B00740BA3 /* Assets.bundle in Resources */,
+				2B7F5EABC8EFF7E1E8EA1CC1AE113527 /* Assets.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
