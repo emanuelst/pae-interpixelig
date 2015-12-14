@@ -21,7 +21,6 @@
 		E0E69BA61BF527C0003870D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0E69BA41BF527C0003870D1 /* LaunchScreen.storyboard */; };
 		E0E69BB11BF527C0003870D1 /* youtube_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E69BB01BF527C0003870D1 /* youtube_appTests.swift */; };
 		E0E69BBC1BF527C0003870D1 /* youtube_appUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E69BBB1BF527C0003870D1 /* youtube_appUITests.swift */; };
-		E0F35DC71BF58DF800A80F9D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E0F35DC61BF58DF800A80F9D /* .gitignore */; };
 		E0F35DC91BF58E8D00A80F9D /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0F35DC81BF58E8D00A80F9D /* keys.plist */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +64,6 @@
 		E0E69BB71BF527C0003870D1 /* youtube-appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "youtube-appUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E69BBB1BF527C0003870D1 /* youtube_appUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = youtube_appUITests.swift; sourceTree = "<group>"; };
 		E0E69BBD1BF527C0003870D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E0F35DC61BF58DF800A80F9D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E0F35DC81BF58E8D00A80F9D /* keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		E10531675C713637B1A53911 /* Pods_youtube_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_youtube_app.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -139,7 +137,6 @@
 		E0E69B981BF527BF003870D1 /* youtube-app */ = {
 			isa = PBXGroup;
 			children = (
-				E0F35DC61BF58DF800A80F9D /* .gitignore */,
 				E0E69B991BF527BF003870D1 /* AppDelegate.swift */,
 				E0650BAC1C14800700C01495 /* Main.storyboard */,
 				E0B1BABD1C1DF64200F25573 /* TappableSubviewNavBar.swift */,
@@ -284,7 +281,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0F35DC91BF58E8D00A80F9D /* keys.plist in Resources */,
-				E0F35DC71BF58DF800A80F9D /* .gitignore in Resources */,
 				E0E69BA61BF527C0003870D1 /* LaunchScreen.storyboard in Resources */,
 				E0650BAD1C14800700C01495 /* Main.storyboard in Resources */,
 				E0E69BA31BF527C0003870D1 /* Assets.xcassets in Resources */,
