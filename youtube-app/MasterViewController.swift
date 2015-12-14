@@ -37,7 +37,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         textField.resignFirstResponder();
         
         //get search results... refactor to method if possible?
-        youtubeBrain.getSearchResults(enteredText!) { (response) in
+        youtubeBrain.getSearchResults("q="+enteredText!) { (response) in
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
@@ -165,7 +165,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             
             self?.autoCompleteTextField.text = selectedSuggestion
             
-            self!.youtubeBrain.getSearchResults(self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]) { (response) in
+            self!.youtubeBrain.getSearchResults("q="+self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]) { (response) in
                 if let dictionary = response as NSDictionary? {
                     self!.dict = dictionary
                     
