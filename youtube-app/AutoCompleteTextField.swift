@@ -139,11 +139,12 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
         }
         
         if enableAttributedText{
-            // FIXME this line sometimes causes a 
-            //
-            // fatal error: Array index out of range
-            //
-            cell?.textLabel?.attributedText = attributedAutoCompleteStrings![indexPath.row]
+            // FIXME this line sometimes causes a fatal error: Array index out of range
+            if indexPath.row < attributedAutoCompleteStrings!.count {
+                cell?.textLabel?.attributedText = attributedAutoCompleteStrings![indexPath.row]
+            } else {
+                print("this fixes our fatal error: Array index out of range")
+            }
         }
         else{
             cell?.textLabel?.font = autoCompleteTextFont
