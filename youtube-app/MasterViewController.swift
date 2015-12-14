@@ -103,7 +103,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
             self.visualEffectView.effect = UIBlurEffect(style: .Light)
-
+            
             }, completion: { finished in
                 //print("animation finished")
         })
@@ -116,6 +116,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     func removeBlur(){
         visualEffectView.removeFromSuperview()
+        visualEffectView.effect = nil
         autoCompleteTextField.endEditing(true)
         //dismiss keyboard & put cursor out of textField
         //autoCompleteTextField.resignFirstResponder()
@@ -123,7 +124,10 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     func scrollToTop(){
         let indexPath = NSIndexPath(forItem: 0, inSection: 0)
-        collectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        
+        if(collectionView!.numberOfItemsInSection(0) > 0){
+            collectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        }
         
         //fix parallax offsets, same code as in scrollViewDidScroll
         for view in collectionView!.visibleCells(){
@@ -156,7 +160,6 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         autoCompleteTextField.onTextFieldDidBeginEditing = {[weak self] text in
             self!.performSelectorOnMainThread(Selector("addBlur"), withObject: nil, waitUntilDone: true)
         }
-        
         
         autoCompleteTextField.onTextChange = {[weak self] text in
             
@@ -225,7 +228,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                     self!.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
                     self!.performSelectorOnMainThread(Selector("removeBlur"), withObject: nil, waitUntilDone: true)
                     self!.performSelectorOnMainThread(Selector("scrollToTop"), withObject: nil, waitUntilDone: true)
-
+                    
                     
                 }
             }
