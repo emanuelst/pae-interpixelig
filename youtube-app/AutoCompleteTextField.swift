@@ -22,6 +22,9 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     /// Handle textfield's shouldReturn
     public var onTextFieldShouldReturn:(String)->() = {_ in}
     
+    /// Handle textfield's didBeginEditing
+    public var onTextFieldDidBeginEditing:(String)->() = {_ in}
+    
     /// Font for the text suggestions
     public var autoCompleteTextFont = UIFont(name: "HelveticaNeue-Light", size: 12)
     /// Color of the text suggestions
@@ -29,7 +32,7 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     /// Used to set the height of cell for each suggestions
     public var autoCompleteCellHeight:CGFloat = 44.0
     /// The maximum visible suggestion
-    public var maximumAutoCompleteCount = 3
+    public var maximumAutoCompleteCount = 6
     /// Used to set your own preferred separator inset
     public var autoCompleteSeparatorInset = UIEdgeInsetsZero
     /// Shows autocomplete text with formatting
@@ -131,6 +134,10 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
         }
         
         if enableAttributedText{
+            // FIXME this line sometimes causes a 
+            //
+            // fatal error: Array index out of range
+            //
             cell?.textLabel?.attributedText = attributedAutoCompleteStrings![indexPath.row]
         }
         else{
@@ -205,7 +212,9 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
     
     //MARK: - Textfield Delegates
     public func textFieldDidBeginEditing(textField: UITextField) {
-        self.autoCompleteTableView?.hidden = false
+        //self.autoCompleteTableView?.hidden = false
+        onTextFieldDidBeginEditing(text!)
+        self.autoCompleteTableView?.hidden = self.hidesWhenEmpty! ? self.text!.isEmpty : false
     }
     
     public func textFieldShouldReturn(textField: UITextField) -> Bool {

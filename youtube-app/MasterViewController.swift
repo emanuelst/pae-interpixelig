@@ -24,6 +24,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
     
+    //the blur biew
+    var visualEffectView : UIVisualEffectView!
+    
     var dict: NSDictionary? = nil
     
     func moveCursorToSearch(sender: AnyObject) {
@@ -59,10 +62,8 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         configureTextField()
         handleTextFieldInterfaces()
         
-        // self.navigationItem.leftBarButtonItem = self.editButtonItem()
-        
-        // let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        // self.navigationItem.rightBarButtonItem = addButton
+        // move cursor to textField
+        autoCompleteTextField.becomeFirstResponder()
         
         let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "moveCursorToSearch:")
         self.navigationItem.rightBarButtonItem = searchButton
@@ -72,26 +73,41 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
+        // add blur view
+        // addBlur()
+        
         // load video in our player view
         // let videoId = "enXT2jgB5bs"
         // let playerVars: [String: Int] = ["playsinline": 1]
         
         // playerView.loadWithVideoId(videoId, playerVars: playerVars)
         youtubeBrain.initKeys()
-        //youtubeBrain.getSearchResults()
         
-        /*
+        
+        // initialize with ”default" videos
+        // we can later change this to e.g popular videos in country
         youtubeBrain.getSearchResults() { (response) in
-        if let dictionary = response as NSDictionary? {
-        self.dict = dictionary
-        
-        // we could also use dispatch_async here
-        // http://stackoverflow.com/a/26262409/841052
-        self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+            if let dictionary = response as NSDictionary? {
+                self.dict = dictionary
+                
+                // we could also use dispatch_async here
+                // http://stackoverflow.com/a/26262409/841052
+                self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+            }
         }
-        }
-        */
+    }
+    
+    func addBlur(){
+        let blurEffect: UIBlurEffect = UIBlurEffect(style: .Light)
+        visualEffectView = TappableVisualEffectView(effect: blurEffect)
         
+        visualEffectView.frame = self.collectionView!.bounds
+        self.collectionView!.addSubview(visualEffectView)
+        
+    }
+    
+    func removeBlur(){
+        visualEffectView.removeFromSuperview()
     }
     
     /* from https://github.com/mnbayan/autoCompleteTextFieldSwift */
@@ -112,7 +128,20 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     //todo... similar code as in youtubeBrain (url connection, json decoding)
     private func handleTextFieldInterfaces(){
+        
+        autoCompleteTextField.onTextFieldDidBeginEditing = {[weak self] text in
+            self!.performSelectorOnMainThread(Selector("addBlur"), withObject: nil, waitUntilDone: true)
+        }
+        
+        
         autoCompleteTextField.onTextChange = {[weak self] text in
+            
+            //if theres no blur onTextChange, we add one
+            if !self!.collectionView!.subviews.contains(self!.visualEffectView){
+                print("it does contain one")
+                self!.performSelectorOnMainThread(Selector("addBlur"), withObject: nil, waitUntilDone: true)
+            }
+            
             if !text.isEmpty{
                 if self!.connection != nil{
                     self!.connection!.cancel()
@@ -145,7 +174,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                         
                         self!.autoCompleteTextField.autoCompleteStrings = suggestionArray
                         return
-
+                        
                     } catch {
                         //handle error
                     }
@@ -171,6 +200,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                     // we could also use dispatch_async here
                     // http://stackoverflow.com/a/26262409/841052
                     self!.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+                    
+                    self!.performSelectorOnMainThread(Selector("removeBlur"), withObject: nil, waitUntilDone: true)
+                    
                 }
             }
         }
@@ -183,6 +215,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                     // we could also use dispatch_async here
                     // http://stackoverflow.com/a/26262409/841052
                     self!.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+                    
+                    self!.performSelectorOnMainThread(Selector("removeBlur"), withObject: nil, waitUntilDone: true)
+                    
                 }
             }
             
