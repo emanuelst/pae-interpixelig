@@ -95,6 +95,22 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
+            flowLayout.itemSize = CGSize(width: view.frame.size.width / 3.0, height: view.frame.size.width * 3.0 / 16.0)
+        } else {
+            flowLayout.itemSize = CGSize(width: view.frame.size.width, height: view.frame.size.width * 9.0 / 16.0)
+        }
+        
+        flowLayout.invalidateLayout()
+    }
+    
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //return self.fetchedResultsController.sections?.count ?? 0
@@ -125,6 +141,11 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         self.configureCell(cell, atIndexPath: indexPath)
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        let leftRightInset = self.view.frame.size.width / 14.0
+        return UIEdgeInsetsMake(0, leftRightInset, 0, leftRightInset)
     }
     
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {

@@ -85,9 +85,6 @@
                                 <fontDescription key="fontDescription" type="system" size="system"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="345" width="600" height="17"/>
-                                </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AX7-kB-OqT" userLabel="Player View" customClass="YTPlayerView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="338"/>
@@ -100,12 +97,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="width" secondItem="AX7-kB-OqT" secondAttribute="width" id="14B-Bd-dFD"/>
-                            <constraint firstItem="AX7-kB-OqT" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" id="8rS-Ho-Q3r"/>
+                            <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="60r-Nz-9Sc"/>
                             <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="top" id="AYt-bh-hRx"/>
+                            <constraint firstItem="AX7-kB-OqT" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="LUc-p4-6JI"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" multiplier="1/3" id="S86-sk-5fD"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="UYG-Be-PD5"/>
+                            <constraint firstItem="AX7-kB-OqT" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="hDq-si-j1o"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="centerX" secondItem="AX7-kB-OqT" secondAttribute="centerX" id="mXe-zk-Te4"/>
-                            <constraint firstItem="AX7-kB-OqT" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="mwf-dZ-6tv"/>
+                            <constraint firstItem="AX7-kB-OqT" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" id="o8L-gi-Leg"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="AX7-kB-OqT" secondAttribute="bottom" id="oM4-zs-xtk"/>
                             <constraint firstItem="Ley-0S-AKN" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="re6-CE-eAZ"/>
                             <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="Ley-0S-AKN" secondAttribute="bottom" id="sNU-TZ-1Ds"/>
@@ -113,15 +112,23 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="60r-Nz-9Sc"/>
                                 <exclude reference="S86-sk-5fD"/>
+                                <exclude reference="hDq-si-j1o"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="subviews">
+                                <exclude reference="0XM-y9-sOw"/>
                                 <include reference="AX7-kB-OqT"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="60r-Nz-9Sc"/>
+                                <exclude reference="AYt-bh-hRx"/>
+                                <exclude reference="LUc-p4-6JI"/>
                                 <include reference="S86-sk-5fD"/>
+                                <include reference="hDq-si-j1o"/>
+                                <exclude reference="o8L-gi-Leg"/>
                                 <exclude reference="14B-Bd-dFD"/>
                                 <exclude reference="oM4-zs-xtk"/>
                             </mask>
