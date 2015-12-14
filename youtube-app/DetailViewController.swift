@@ -74,8 +74,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         
         print(videoId)
         
-        //get search results... refactor to method if possible?
-        youtubeBrain.getSearchResults("relatedToVideoId="+videoId) { (response) in
+        youtubeBrain.getRelatedVideos(videoId) { (response) in
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 

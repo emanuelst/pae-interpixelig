@@ -31,10 +31,41 @@ class YoutubeBrain{
         key = keys?["youtubeApiKey"] as! String
     }
     
+    // fixme: duplicate code
+    // we assume we have a working internet connection
+    // do a search, get results from url, parse and set dictionary
+    // limited to ~500,000 per day!
     func getRelatedVideos(searchstring: String = "", callback: (NSDictionary) -> ()) {
-        // Not yet implemented
+        //we only get video results
+        //todo escape searchstring
+        //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        
+        let maxResults = 10
+        
+        let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=\(searchstring)&type=video&maxResults=\(maxResults)&key=\(key)"
+        
+        let escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        
+        let nsurl = NSURL(string: escape!)
+        let session = NSURLSession.sharedSession()
+        // get JSON from URL and parse into dictionary
+        let task = session.dataTaskWithURL(nsurl!) {
+            (data, response, error) -> Void in
+            
+            do {
+                self.jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                
+            } catch {
+                //handle error
+            }
+            
+            self.loaded=true
+            callback(self.jsonDict)
+        }
+        task.resume()
     }
     
+    // fixme: duplicate code
     // we assume we have a working internet connection
     // do a search, get results from url, parse and set dictionary
     // limited to ~500,000 per day!
@@ -45,7 +76,7 @@ class YoutubeBrain{
         
         let maxResults = 10
         
-        let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&\(searchstring)&type=video&maxResults=\(maxResults)&key=\(key)"
+        let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=\(searchstring)&type=video&maxResults=\(maxResults)&key=\(key)"
         
         let escape = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         

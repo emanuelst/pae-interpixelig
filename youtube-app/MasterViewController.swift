@@ -40,7 +40,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         textField.resignFirstResponder();
         
         //get search results... refactor to method if possible?
-        youtubeBrain.getSearchResults("q="+enteredText!) { (response) in
+        youtubeBrain.getSearchResults(enteredText!) { (response) in
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
@@ -198,7 +198,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             
             self?.autoCompleteTextField.text = selectedSuggestion
             
-            self!.youtubeBrain.getSearchResults("q="+self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]) { (response) in
+            self!.youtubeBrain.getSearchResults(self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]) { (response) in
                 if let dictionary = response as NSDictionary? {
                     self!.dict = dictionary
                     
@@ -213,7 +213,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
         
         autoCompleteTextField.onTextFieldShouldReturn = {[weak self] text in
-            self!.youtubeBrain.getSearchResults("q="+text) { (response) in
+            self!.youtubeBrain.getSearchResults(text) { (response) in
                 if let dictionary = response as NSDictionary? {
                     self!.dict = dictionary
                     
@@ -374,6 +374,23 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     func connection(connection: NSURLConnection, didFailWithError error: NSError) {
         print("Error: \(error.localizedDescription)")
+    }
+    
+    //TODO this fixes our search results for now
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let enteredText = autoCompleteTextField.text
+        //get search results... refactor to method if possible?
+        youtubeBrain.getSearchResults(enteredText!) { (response) in
+            if let dictionary = response as NSDictionary? {
+                self.dict = dictionary
+                
+                // we could also use dispatch_async here
+                // http://stackoverflow.com/a/26262409/841052
+                self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
