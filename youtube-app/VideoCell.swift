@@ -47,9 +47,12 @@ class VideoCell: UICollectionViewCell {
     
     func setupImageView(){
         self.clipsToBounds = true
-        imageView = UIImageView(frame: frame)
+        imageView = UIImageView(frame:CGRectMake(0,0, self.frame.width, self.frame.width * 9 / 16))
+        print("width: ", self.frame.width)
+        print("width: ", self.frame.width * 9 / 16)
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = false
+        print(imageView.frame)
         imageView.layer.zPosition = -1;
         self.addSubview(imageView)
     }
@@ -59,6 +62,7 @@ class VideoCell: UICollectionViewCell {
         let frame:CGRect = imageView.bounds
         let offsetFrame:CGRect = CGRectOffset(frame, self.imageOffset.x, self.imageOffset.y)
         imageView.frame = offsetFrame
+        print(imageView.frame)
     }
     
 }

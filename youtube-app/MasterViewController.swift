@@ -341,6 +341,22 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
     }
     
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        guard let flowLayout = self.collectionView!.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
+            flowLayout.itemSize = CGSize(width: self.collectionView!.frame.size.width / 2.0, height: self.collectionView!.frame.size.width / 4.0)
+        } else {
+            flowLayout.itemSize = CGSize(width: self.collectionView!.frame.size.width, height: self.collectionView!.frame.size.width / 2.0)
+        }
+    }
+    
+    
     //MARK: NSURLConnectionDelegate
     func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
         responseData = NSMutableData()
