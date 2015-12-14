@@ -11,6 +11,8 @@ import youtube_ios_player_helper
 
 class DetailViewController: UIViewController, YTPlayerViewDelegate {
     
+    var youtubeBrain = YoutubeBrain()
+
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
     @IBOutlet weak var playerView: YTPlayerView!
@@ -32,7 +34,6 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         }
     }
     
-    var brain: YoutubeBrain?
     
     func configureView() {
         // Update the user interface for the detail item.
@@ -40,7 +41,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
             if let label = self.detailDescriptionLabel {
                 //label.text = detail.valueForKey("videoId")!.description#
                 label.text = "Description"
-                label.text = brain?.getTitleStringForIndex(index)
+                label.text = youtubeBrain.getTitleStringForIndex(index)
             }
         }
         
@@ -49,7 +50,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
                 //let videoId = detail.valueForKey("videoId")!.description
                 playerView.delegate = self
                 
-                let videoId = brain?.getIdStringForIndex(index)
+                let videoId = youtubeBrain.getIdStringForIndex(index)
                 
                 //TODO closed captions?
                 let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "rel" : 0, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
@@ -69,12 +70,11 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
         
-        let videoId = brain?.getIdStringForIndex(vidIndex!)
+        let videoId = youtubeBrain.getIdStringForIndex(vidIndex!)
         
         print(videoId)
         
-        //get search results... refactor to method if possible?
-        brain!.getSearchResults("relatedToVideoId="+videoId!) { (response) in
+        youtubeBrain.getRelatedVideos(videoId) { (response) in
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
@@ -137,22 +137,36 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         return cell
     }
     
+    //same function also in MasterViewController
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
         
-        print(indexPath.row)
-        let titleString = brain!.getTitleStringForIndex(indexPath.row)
+        let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
         
         cell.label.text = titleString
         
-        let urlstring = brain!.getImageUrlForIndex(indexPath.row)
-        print (urlstring)
-        let url:NSURL = NSURL(string: urlstring)!
+        let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.row))!
+        cell.imageUrl = url
         
-        if let dataVar:NSData = NSData(contentsOfURL:url){
-            
-            cell.image = UIImage(data: dataVar)
-            
+        // Image loading.
+        // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
+        if let image = url.cachedImage {
+            // Cached: set immediately.
+            cell.imageView.image = image
+            cell.imageView.alpha = 1
+        } else {
+            // Not cached, so load then fade it in.
+            cell.imageView.alpha = 0
+            url.fetchImage { image in
+                // Check the cell hasn't recycled while loading.
+                if cell.imageUrl == url {
+                    cell.imageView.image = image
+                    UIView.animateWithDuration(0.3) {
+                        cell.imageView.alpha = 1
+                    }
+                }
+            }
         }
+
     }
     
     

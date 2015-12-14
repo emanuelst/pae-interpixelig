@@ -40,7 +40,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         textField.resignFirstResponder();
         
         //get search results... refactor to method if possible?
-        youtubeBrain.getSearchResults("q="+enteredText!) { (response) in
+        youtubeBrain.getSearchResults(enteredText!) { (response) in
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
@@ -198,7 +198,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             
             self?.autoCompleteTextField.text = selectedSuggestion
             
-            self!.youtubeBrain.getSearchResults("q="+self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]) { (response) in
+            self!.youtubeBrain.getSearchResults(self!.autoCompleteTextField.autoCompleteStrings![indexpath.row]) { (response) in
                 if let dictionary = response as NSDictionary? {
                     self!.dict = dictionary
                     
@@ -213,7 +213,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
         
         autoCompleteTextField.onTextFieldShouldReturn = {[weak self] text in
-            self!.youtubeBrain.getSearchResults("q="+text) { (response) in
+            self!.youtubeBrain.getSearchResults(text) { (response) in
                 if let dictionary = response as NSDictionary? {
                     self!.dict = dictionary
                     
@@ -249,7 +249,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 
                 // controller.detailItem = object
-                controller.brain = youtubeBrain
+                controller.youtubeBrain = self.youtubeBrain
                 // todo --> pass vid id instead or create a video object...
                 // todo --> we can create a video object (for description, id and title), pass our brain and get comments via the vid Id !
                 // first selected object...
@@ -310,11 +310,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             
         }
         else {
-            print(indexPath.row)
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
             
             cell.label.text = titleString
-            
             
             let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.row))!
             cell.imageUrl = url
@@ -394,6 +392,23 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         print("Error: \(error.localizedDescription)")
     }
     
+    //TODO this fixes our search results for now
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let enteredText = autoCompleteTextField.text
+        //get search results... refactor to method if possible?
+        youtubeBrain.getSearchResults(enteredText!) { (response) in
+            if let dictionary = response as NSDictionary? {
+                self.dict = dictionary
+                
+                // we could also use dispatch_async here
+                // http://stackoverflow.com/a/26262409/841052
+                self.collectionView?.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
+            }
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -403,7 +418,13 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
         
         effectView.frame = self.collectionView!.bounds
-        
+    }
+    
+    // todo: when starting in landscape, initalize correctly...
+    // todo, move this functionality to --> AutoCompleteTextField.swift?
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        self.autoCompleteTextField.autoCompleteTableWidth = size.width
     }
     
 }
