@@ -9,10 +9,10 @@
 import UIKit
 import youtube_ios_player_helper
 
-class DetailViewController: UIViewController, YTPlayerViewDelegate {
+class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayerViewDelegate {
     
     var youtubeBrain = YoutubeBrain()
-
+    
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
     @IBOutlet weak var playerView: YTPlayerView!
@@ -20,6 +20,9 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     
     var dict: NSDictionary? = nil
     
+    var videoId: String?
+    
+    // this could hold a videoObject some time...
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -29,11 +32,21 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     
     var vidIndex: Int? {
         didSet {
-            // Update the view.
+            // Update the view and videoId
+            self.videoId = youtubeBrain.getIdStringForIndex(vidIndex!)
             self.configureView()
         }
     }
     
+    func playerViewDidBecomeReady(playerView: YTPlayerView!){
+        playerView.playVideo()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        self.configureView()
+    }
     
     func configureView() {
         // Update the user interface for the detail item.
@@ -46,43 +59,24 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         }
         
         if let player = self.playerView {
-            if let index = self.vidIndex {
-                //let videoId = detail.valueForKey("videoId")!.description
-                playerView.delegate = self
-                
-                let videoId = youtubeBrain.getIdStringForIndex(index)
-                
-                //TODO closed captions?
-                let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "rel" : 0, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
-                player.loadWithVideoId(videoId, playerVars: playerVars)
-            }
-            //let videoId = "enXT2jgB5bs"
+            //let videoId = detail.valueForKey("videoId")!.description
+            playerView.delegate = self
+            
+            //TODO closed captions?
+            let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "rel" : 0, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
+            player.loadWithVideoId(videoId, playerVars: playerVars)
         }
-    }
-    
-    func playerViewDidBecomeReady(playerView: YTPlayerView!){
-        playerView.playVideo()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.configureView()
         
-        let videoId = youtubeBrain.getIdStringForIndex(vidIndex!)
-        
-        youtubeBrain.getRelatedVideos(videoId) { (response) in
+        // get related
+        youtubeBrain.getRelatedVideos(videoId!) { (response) in
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
-                
-                // print(self.dict)
                 
                 // we could also use dispatch_async here
                 // http://stackoverflow.com/a/26262409/841052
                 self.relatedVideosCollectionView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: true)
             }
         }
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -106,7 +100,7 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
         //return self.fetchedResultsController.sections?.count ?? 0
         return 1
     }
-
+    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //let sectionInfo = self.fetchedResultsController.sections![section]
@@ -163,9 +157,13 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
                 }
             }
         }
-
+        
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        self.vidIndex = indexPath.row
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -173,15 +171,15 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
     }
     /*
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-            print("landscape")
-            self.navigationController?.hidesBarsWhenVerticallyCompact = true
-            self.navigationController?.navigationBarHidden = true
-        } else {
-            print("portrait")
-            self.navigationController?.hidesBarsWhenVerticallyCompact = true
-            self.navigationController?.navigationBarHidden = false
-        }
+    if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+    print("landscape")
+    self.navigationController?.hidesBarsWhenVerticallyCompact = true
+    self.navigationController?.navigationBarHidden = true
+    } else {
+    print("portrait")
+    self.navigationController?.hidesBarsWhenVerticallyCompact = true
+    self.navigationController?.navigationBarHidden = false
+    }
     }
     */
     
