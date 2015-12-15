@@ -109,8 +109,12 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         })
         
         // add touch recognizer
-        let gesture = UITapGestureRecognizer(target: self, action: "removeBlur")
-        self.visualEffectView.addGestureRecognizer(gesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: "removeBlur")
+        self.visualEffectView.addGestureRecognizer(tapGesture)
+        
+        // todo maybe continue scrolling
+        let panGesture = UIPanGestureRecognizer(target: self, action: nil)
+        self.visualEffectView.addGestureRecognizer(panGesture)
         
     }
     
