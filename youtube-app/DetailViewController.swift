@@ -163,7 +163,11 @@ class DetailViewController: UIViewController, YTPlayerViewDelegate {
                 }
             }
         }
-
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        playerView.pauseVideo()
     }
     
     

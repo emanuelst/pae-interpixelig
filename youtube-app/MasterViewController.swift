@@ -116,7 +116,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             })
         }
         
-
+        
         
         // add touch recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: "removeBlur")
