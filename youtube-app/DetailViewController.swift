@@ -92,6 +92,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
             flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width, height: relatedVideosCollectionView.frame.size.width * 9.0 / 16.0)
         }
         
+        //print("flowLayout frame: ", flowLayout.itemSize)
+        
+        
         flowLayout.invalidateLayout()
     }
     
@@ -164,6 +167,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     {
         self.vidIndex = indexPath.row
     }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        playerView.pauseVideo()
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

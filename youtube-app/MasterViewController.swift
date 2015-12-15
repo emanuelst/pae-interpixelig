@@ -146,8 +146,8 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         //fix parallax offsets, same code as in scrollViewDidScroll
         for view in collectionView!.visibleCells(){
             let view:VideoCell = view as! VideoCell
-            // view.frame.origin.y = 0...
-            let yOffset:CGFloat = ((collectionView!.contentOffset.y - 0) / 200) * 25
+            let yOffset:CGFloat = (collectionView!.contentOffset.y - view.frame.origin.y + (UIScreen.mainScreen().bounds.height) / 2.0) / 8.0
+            //print(view.frame.origin.y)
             view.setImageOffset(CGPointMake(0, yOffset))
         }
     }
@@ -308,6 +308,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         //does this return the correct number...
         
         if(dict != nil && dict!.count != 0){
+            //print(dict!["items"]!.count)
             return dict!["items"]!.count
         }
         else {
@@ -317,13 +318,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        // let cell = collectionView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        //let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
-        
-        //self.configureCell(cell, atIndexPath: indexPath)
-        //return cell
         
         let cell:VideoCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
+        //print(indexPath)
         self.configureCell(cell, atIndexPath: indexPath)
         
         return cell
@@ -331,9 +328,12 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
+        //print("offsets")
         for view in collectionView!.visibleCells(){
             let view:VideoCell = view as! VideoCell
-            let yOffset:CGFloat = ((collectionView!.contentOffset.y - view.frame.origin.y) / 200) * 25
+            let yOffset:CGFloat = (collectionView!.contentOffset.y - view.frame.origin.y + (UIScreen.mainScreen().bounds.height) / 2.0) / 8.0
+            //print(UIScreen.mainScreen().bounds.height)
+            //print(collectionView!.contentOffset.y - view.frame.origin.y)
             view.setImageOffset(CGPointMake(0, yOffset))
         }
     }
@@ -352,6 +352,11 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
             let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.row))!
             cell.imageUrl = url
             
+            // set offset
+            let yOffset:CGFloat = (collectionView!.contentOffset.y - cell.frame.origin.y + (UIScreen.mainScreen().bounds.height) / 2.0) / 8.0
+            //print(UIScreen.mainScreen().bounds.height)
+            cell.setImageOffset(CGPointMake(0, yOffset))
+            
             // Image loading.
             // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
             if let image = url.cachedImage {
@@ -364,6 +369,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
                 url.fetchImage { image in
                     // Check the cell hasn't recycled while loading.
                     if cell.imageUrl == url {
+                        
                         cell.imageView.image = image
                         UIView.animateWithDuration(0.3) {
                             cell.imageView.alpha = 1
@@ -383,9 +389,9 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
         
         if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
-            flowLayout.itemSize = CGSize(width: self.collectionView!.frame.size.width / 2.0, height: self.collectionView!.frame.size.width / 4.0)
+            flowLayout.itemSize = CGSize(width: self.collectionView!.frame.size.width / 2.0, height: self.collectionView!.frame.size.width / 5.0)
         } else {
-            flowLayout.itemSize = CGSize(width: self.collectionView!.frame.size.width, height: self.collectionView!.frame.size.width / 2.0)
+            flowLayout.itemSize = CGSize(width: self.collectionView!.frame.size.width, height: self.collectionView!.frame.size.width / 2.5)
         }
     }
     
