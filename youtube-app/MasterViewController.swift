@@ -95,18 +95,28 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     }
     
     func addBlur(){
-        visualEffectView = UIVisualEffectView()
+        // only add subview if it does not exist yet
+        // visualEffectView = UIVisualEffectView()
         
-        // frame is also calculated in didLayoutSubviews
-        visualEffectView.frame = self.collectionView!.bounds
-        self.collectionView!.addSubview(visualEffectView)
-        
-        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
-            self.visualEffectView.effect = UIBlurEffect(style: .Light)
+        if(visualEffectView == nil || !visualEffectView.isDescendantOfView(self.collectionView!))
+        {
+            visualEffectView = UIVisualEffectView()
+            self.visualEffectView.effect = nil
             
-            }, completion: { finished in
-                //print("animation finished")
-        })
+            // frame is also calculated in didLayoutSubviews
+            visualEffectView.frame = self.collectionView!.bounds
+            
+            self.collectionView!.addSubview(visualEffectView)
+            
+            UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
+                self.visualEffectView.effect = UIBlurEffect(style: .Light)
+                
+                }, completion: { finished in
+                    //print("animation finished")
+            })
+        }
+        
+
         
         // add touch recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: "removeBlur")
