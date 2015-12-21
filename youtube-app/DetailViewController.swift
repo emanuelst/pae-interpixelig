@@ -49,6 +49,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     }
     
     func configureView() {
+        // default value when starting app on iPad
+        let video = videoId ?? "lG01rpkRRBw"
+
         // Update the user interface for the detail item.
         if let index = self.vidIndex {
             if let label = self.detailDescriptionLabel {
@@ -64,11 +67,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
             
             //TODO closed captions?
             let playerVars: [NSObject: AnyObject] = ["autoplay" : 1, "rel" : 0, "enablejsapi" : 1, "autohide" : 1, "playsinline": 1, "modestbranding" : 1, "controls" : 1, "origin" : "https://www.example.com", "showinfo" : 0]
-            player.loadWithVideoId(videoId, playerVars: playerVars)
+            player.loadWithVideoId(video, playerVars: playerVars)
         }
         
         // get related
-        youtubeBrain.getRelatedVideos(videoId!) { (response) in
+        youtubeBrain.getRelatedVideos(video) { (response) in
             if let dictionary = response as NSDictionary? {
                 self.dict = dictionary
                 
@@ -109,7 +112,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         //let sectionInfo = self.fetchedResultsController.sections![section]
         //does this return the correct number...
         
-        if(dict != nil && dict!.count != 0){
+        if(dict != nil && dict!["items"] != nil && dict!.count != 0){
             return dict!["items"]!.count <= 9 ? dict!["items"]!.count : 9
         }
         else {
