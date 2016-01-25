@@ -76,6 +76,7 @@ class VideoCell: UICollectionViewCell {
     }
     
     // http://www.kaleidosblog.com/uiimage-from-url-with-swift
+    /*
     func load_image(imgURL:NSURL)
     {
         let request: NSURLRequest = NSURLRequest(URL: imgURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 5)
@@ -88,5 +89,6 @@ class VideoCell: UICollectionViewCell {
         })
         
     }
+    */
     
 }

@@ -60,6 +60,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         // self.relatedVideosCollectionView.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cell")
         self.relatedVideosCollectionView.reloadData()
         
+        // self.relatedVideosCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .CenteredVertically, animated: true)
+
     }
     
     func configureView() {
@@ -98,6 +100,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
+        // self.relatedVideosCollectionView.setContentOffset(CGPoint(x: 300, y: 300), animated: true)
         
         guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
@@ -167,16 +171,15 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         
         let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
         cell.inDetailView = true
-        cell.backgroundColor = UIColor.blueColor()
         cell.label.text = titleString
 
         
         let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.section*5 + indexPath.row))!
         cell.imageUrl = url
         
-        cell.load_image(url)
+        // cell.load_image(url)
         
-/*
+
         
         // Image loading.
         // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
@@ -196,13 +199,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
                 
             }
         }
-        
+        /*
         if let dataVar:NSData = NSData(contentsOfURL:url){
             
             cell.image = UIImage(data: dataVar)
             cell.imageView.alpha = 0.3
         }
-
+        */
         /*
         print(indexPath.section)
         print(indexPath.row)
@@ -210,7 +213,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         print(cell.imageView.image)
         print("xx")
         */
-*/
+
     }
     
 
