@@ -113,7 +113,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         //does this return the correct number...
         
         if(dict != nil && dict!["items"] != nil && dict!.count != 0){
-            return dict!["items"]!.count <= 9 ? dict!["items"]!.count : 9
+            return dict!["items"]!.count <= 25 ? dict!["items"]!.count : 25
         }
         else {
             return 0

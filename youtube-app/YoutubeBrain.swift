@@ -40,7 +40,7 @@ class YoutubeBrain{
         //todo escape searchstring
         //var escapedString = searchstring.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        let maxResults = 10
+        let maxResults = 25
         
         let url = "https://www.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=\(searchstring)&type=video&maxResults=\(maxResults)&key=\(key)"
         
