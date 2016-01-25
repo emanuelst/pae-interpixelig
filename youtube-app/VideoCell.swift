@@ -19,6 +19,8 @@ class VideoCell: UICollectionViewCell {
     // Offset to Create parallax Effect
     var imageOffset:CGPoint!
     
+    var inDetailView = false
+    
     //Using Closures !!
     
     var image:UIImage!{
@@ -57,7 +59,7 @@ class VideoCell: UICollectionViewCell {
         
         
         // TODO also check for detailViewController
-        if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
+        if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) && inDetailView {
             // do nothing
         } else {
             imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
@@ -71,6 +73,20 @@ class VideoCell: UICollectionViewCell {
         let offsetFrame:CGRect = CGRectOffset(frame, self.imageOffset.x, self.imageOffset.y)
         imageView.frame = offsetFrame
         //print(imageView.frame)
+    }
+    
+    // http://www.kaleidosblog.com/uiimage-from-url-with-swift
+    func load_image(imgURL:NSURL)
+    {
+        let request: NSURLRequest = NSURLRequest(URL: imgURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 5)
+        NSURLConnection.sendAsynchronousRequest(
+            request, queue: NSOperationQueue.mainQueue(),
+            completionHandler: {(response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+                if error == nil && data != nil {
+                    self.image = UIImage(data: data!)
+                }
+        })
+        
     }
     
 }

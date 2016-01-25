@@ -346,7 +346,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
         }
         else {
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
-            
+            cell.inDetailView = false
             cell.label.text = titleString
             
             let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.row))!

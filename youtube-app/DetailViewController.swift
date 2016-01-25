@@ -57,7 +57,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         self.relatedVideosCollectionView.showsVerticalScrollIndicator = false
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.view.backgroundColor = UIColor.blackColor()
-        self.relatedVideosCollectionView.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cell")
+        // self.relatedVideosCollectionView.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cell")
         self.relatedVideosCollectionView.reloadData()
         
     }
@@ -166,47 +166,43 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
         
         let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
-        
+        cell.inDetailView = true
         cell.backgroundColor = UIColor.blueColor()
-        // cell.label.text = titleString
+        cell.label.text = titleString
 
         
         let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.section*5 + indexPath.row))!
         cell.imageUrl = url
         
+        cell.load_image(url)
         
-
-        print("xx")
+/*
         
-        if let dataVar:NSData = NSData(contentsOfURL:url){
-            
-            cell.image = UIImage(data: dataVar)
-            
-        }
-
-        /*
-
         // Image loading.
         // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
         if let image = url.cachedImage {
-            print(image)
             // Cached: set immediately.
             cell.imageView.image = image
             cell.imageView.alpha = 1
         } else {
             // Not cached, so load then fade it in.
-            cell.imageView.alpha = 0
+            cell.imageView.alpha = 1
             url.fetchImage { image in
                 // Check the cell hasn't recycled while loading.
+                cell.imageView.image = image
                 if cell.imageUrl == url {
                     cell.imageView.image = image
-                    UIView.animateWithDuration(0.3) {
-                        cell.imageView.alpha = 1
-                    }
                 }
+                
             }
         }
-*/
+        
+        if let dataVar:NSData = NSData(contentsOfURL:url){
+            
+            cell.image = UIImage(data: dataVar)
+            cell.imageView.alpha = 0.3
+        }
+
         /*
         print(indexPath.section)
         print(indexPath.row)
@@ -214,7 +210,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         print(cell.imageView.image)
         print("xx")
         */
+*/
     }
+    
+
+    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {

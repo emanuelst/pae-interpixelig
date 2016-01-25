@@ -17,8 +17,8 @@ class ImageCache {
     static let sharedCache: NSCache = {
         let cache = NSCache()
         cache.name = "MyImageCache"
-        cache.countLimit = 20 // Max 20 images in memory.
-        cache.totalCostLimit = 10*1024*1024 // Max 10MB used.
+        cache.countLimit = 25 // Max 25 images in memory.
+        cache.totalCostLimit = 25*1024*1024 // Max 25MB used.
         return cache
     }()
     
@@ -43,7 +43,7 @@ extension NSURL {
         let task = NSURLSession.sharedSession().dataTaskWithURL(self) {
             data, response, error in
             if error == nil {
-                if let  data = data,
+                if let data = data,
                     image = UIImage(data: data) {
                         ImageCache.sharedCache.setObject(
                             image,
