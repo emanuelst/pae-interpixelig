@@ -120,6 +120,15 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
             self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
             
         } else {
+            // scroll to top
+            let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+            
+            if(relatedVideosCollectionView!.numberOfItemsInSection(0) > 0){
+                relatedVideosCollectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+            }
+            
+            
+            
             // self.relatedVideosCollectionView.scrollToItemAtIndexPath(0, atScrollPosition: .Top , animated: true)
             flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width, height: relatedVideosCollectionView.frame.size.width * 9.0 / 16.0)
         }
