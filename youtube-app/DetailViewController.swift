@@ -55,7 +55,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         self.relatedVideosCollectionView.collectionViewLayout = layout
         self.relatedVideosCollectionView.showsHorizontalScrollIndicator = false
         self.relatedVideosCollectionView.showsVerticalScrollIndicator = false
-        layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        layout.scrollDirection = UICollectionViewScrollDirection.Vertical
         self.view.backgroundColor = UIColor.blackColor()
         // self.relatedVideosCollectionView.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cell")
         self.relatedVideosCollectionView.reloadData()
@@ -101,15 +101,26 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        // self.relatedVideosCollectionView.setContentOffset(CGPoint(x: 300, y: 300), animated: true)
-        
+        //
+        //self.relatedVideosCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 2, inSection: 2), atScrollPosition: .CenteredHorizontally, animated: true)
+        //self.relatedVideosCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 2, inSection: 2), atScrollPosition: .CenteredVertically, animated: true)
+
         guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
         
         if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
             flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width / 3.0, height: relatedVideosCollectionView.frame.size.height / 3.0)
+            
+            // scroll to center
+            let x = relatedVideosCollectionView.contentSize.width/2 - relatedVideosCollectionView.frame.size.width/2
+            let y = relatedVideosCollectionView.contentSize.height/2 - relatedVideosCollectionView.frame.size.height/2
+            print(x)
+            print(y)
+            self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+            
         } else {
+            // self.relatedVideosCollectionView.scrollToItemAtIndexPath(0, atScrollPosition: .Top , animated: true)
             flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width, height: relatedVideosCollectionView.frame.size.width * 9.0 / 16.0)
         }
         

@@ -25,12 +25,21 @@ class NodeLayout : UICollectionViewFlowLayout {
         super.init()
     }
     override func collectionViewContentSize() -> CGSize {
+        if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) {
+            return super.collectionViewContentSize()
+        }
+        
+        
         let w : CGFloat = CGFloat(self.collectionView!.numberOfItemsInSection(0)) * (itemWidth + space)
         let h : CGFloat = CGFloat(self.collectionView!.numberOfSections()) * (itemHeight + space)
         return CGSizeMake(w, h)
     }
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+        if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) {
+            return super.layoutAttributesForItemAtIndexPath(indexPath)
+        }
+        
         let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         let x : CGFloat = CGFloat(indexPath.row) * (itemWidth + space)
         let y : CGFloat = CGFloat(indexPath.section) + CGFloat(indexPath.section) * (itemHeight + space)
@@ -39,6 +48,10 @@ class NodeLayout : UICollectionViewFlowLayout {
     }
 
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) {
+            return super.layoutAttributesForElementsInRect(rect)
+        }
+        
         let minRow : Int = (rect.origin.x > 0) ? Int(rect.origin.x/(itemWidth + space)) : 0
         let maxRow : Int = Int(floor(rect.size.width/(itemWidth + space)) + CGFloat(minRow))
         var attributes : Array<UICollectionViewLayoutAttributes> = [UICollectionViewLayoutAttributes]()

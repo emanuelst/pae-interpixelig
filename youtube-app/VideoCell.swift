@@ -61,6 +61,7 @@ class VideoCell: UICollectionViewCell {
         // TODO also check for detailViewController
         if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) && inDetailView {
             // do nothing
+            print("landscape, detail")
         } else {
             imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
@@ -74,21 +75,5 @@ class VideoCell: UICollectionViewCell {
         imageView.frame = offsetFrame
         //print(imageView.frame)
     }
-    
-    // http://www.kaleidosblog.com/uiimage-from-url-with-swift
-    /*
-    func load_image(imgURL:NSURL)
-    {
-        let request: NSURLRequest = NSURLRequest(URL: imgURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 5)
-        NSURLConnection.sendAsynchronousRequest(
-            request, queue: NSOperationQueue.mainQueue(),
-            completionHandler: {(response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
-                if error == nil && data != nil {
-                    self.image = UIImage(data: data!)
-                }
-        })
-        
-    }
-    */
     
 }
