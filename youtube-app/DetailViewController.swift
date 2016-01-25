@@ -16,7 +16,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
     @IBOutlet weak var playerView: YTPlayerView!
-    @IBOutlet weak var relatedVideosCollectionView: UICollectionView!
+    @IBOutlet weak var relatedVideosCollectionView: RDCollectionView!
+    
+    @IBOutlet weak var epicCollectionView: RDCollectionView!
+    let theData = [["1","2","3","4","5"], ["6","7","8","9","10"],["11","12","13","14","15"],["16","17","18","19","20"]]
     
     var dict: NSDictionary? = nil
     
@@ -45,7 +48,18 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         self.configureView()
+        
+        let layout = NodeLayout(itemWidth: relatedVideosCollectionView.frame.size.width / 3.0, itemHeight: 100, space: 1)
+        self.relatedVideosCollectionView.collectionViewLayout = layout
+        self.relatedVideosCollectionView.showsHorizontalScrollIndicator = false
+        self.relatedVideosCollectionView.showsVerticalScrollIndicator = false
+        layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        self.view.backgroundColor = UIColor.blackColor()
+        self.relatedVideosCollectionView.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cell")
+        self.relatedVideosCollectionView.reloadData()
+        
     }
     
     func configureView() {
@@ -101,19 +115,22 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         flowLayout.invalidateLayout()
     }
     
+
+    
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //return self.fetchedResultsController.sections?.count ?? 0
-        return 1
+        return 5
     }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // return 20
+        
         //let sectionInfo = self.fetchedResultsController.sections![section]
         //does this return the correct number...
-        
         if(dict != nil && dict!["items"] != nil && dict!.count != 0){
-            return dict!["items"]!.count <= 25 ? dict!["items"]!.count : 25
+            return dict!["items"]!.count <= 5 ? dict!["items"]!.count : 5
         }
         else {
             return 0
@@ -123,14 +140,25 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         // let cell = collectionView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        //let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
         
-        //self.configureCell(cell, atIndexPath: indexPath)
-        //return cell
         
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
+        
+        self.configureCell(cell, atIndexPath: indexPath)
+        return cell
+
+        
+        /*
+        let cell = epicCollectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
+        cell.label.text = self.theData[indexPath.section%4][indexPath.row%5]
+        return cell
+        */
+        
+        
+        /*
         let cell:VideoCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
         self.configureCell(cell, atIndexPath: indexPath)
-        
+        */
         return cell
     }
     
@@ -139,14 +167,29 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         
         let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
         
-        cell.label.text = titleString
+        cell.backgroundColor = UIColor.blueColor()
+        // cell.label.text = titleString
+
         
-        let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.row))!
+        let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.section*5 + indexPath.row))!
         cell.imageUrl = url
         
+        
+
+        print("xx")
+        
+        if let dataVar:NSData = NSData(contentsOfURL:url){
+            
+            cell.image = UIImage(data: dataVar)
+            
+        }
+
+        /*
+
         // Image loading.
         // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
         if let image = url.cachedImage {
+            print(image)
             // Cached: set immediately.
             cell.imageView.image = image
             cell.imageView.alpha = 1
@@ -163,7 +206,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
                 }
             }
         }
-        
+*/
+        /*
+        print(indexPath.section)
+        print(indexPath.row)
+        print(indexPath.section*5 + indexPath.row)
+        print(cell.imageView.image)
+        print("xx")
+        */
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)

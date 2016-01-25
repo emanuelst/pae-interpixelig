@@ -11,7 +11,7 @@ import UIKit
 class VideoCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
-        
+    
     var imageView: UIImageView!
     
     var imageUrl: NSURL!
@@ -27,7 +27,7 @@ class VideoCell: UICollectionViewCell {
         }
         set{
             self.imageView.image = newValue
-
+            
             if imageOffset != nil{
                 setImageOffset(imageOffset)
             }else{
@@ -55,8 +55,14 @@ class VideoCell: UICollectionViewCell {
         imageView.layer.zPosition = -1;
         self.addSubview(imageView)
         
-        imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        
+        // TODO also check for detailViewController
+        if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
+            // do nothing
+        } else {
+            imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
+            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        }
     }
     
     func setImageOffset(imageOffset:CGPoint) {
