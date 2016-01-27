@@ -19,7 +19,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     @IBOutlet weak var relatedVideosCollectionView: RDCollectionView!
     
     @IBOutlet weak var epicCollectionView: RDCollectionView!
-    let theData = [["1","2","3","4","5"], ["6","7","8","9","10"],["11","12","13","14","15"],["16","17","18","19","20"]]
     
     var dict: NSDictionary? = nil
     
@@ -51,7 +50,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         
         self.configureView()
         
-        let layout = NodeLayout(itemWidth: relatedVideosCollectionView.frame.size.width / 3.0, itemHeight: 100, space: 1)
+        let layout = NodeLayout(itemWidth: relatedVideosCollectionView.frame.size.width / 3.0, itemHeight: 100, space: 0)
         self.relatedVideosCollectionView.collectionViewLayout = layout
         self.relatedVideosCollectionView.showsHorizontalScrollIndicator = false
         self.relatedVideosCollectionView.showsVerticalScrollIndicator = false
@@ -64,13 +63,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     func configureView() {
         // default value when starting app on iPad
         let video = videoId ?? "lG01rpkRRBw"
-
+        
         // Update the user interface for the detail item.
         if let index = self.vidIndex {
             if let label = self.detailDescriptionLabel {
                 //label.text = detail.valueForKey("videoId")!.description#
                 label.text = "Description"
-                label.text = youtubeBrain.getTitleStringForIndex(index)
+                label.text = youtubeBrain.getTitleStringForIndex(index) + "\n\n" + youtubeBrain.getDescriptionForIndex(index)
             }
         }
         
@@ -108,8 +107,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
             // scroll to center
             let x = relatedVideosCollectionView.contentSize.width/2 - relatedVideosCollectionView.frame.size.width/2
             let y = relatedVideosCollectionView.contentSize.height/2 - relatedVideosCollectionView.frame.size.height/2
-            print(x)
-            print(y)
+            
             self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
             
         } else {
@@ -126,7 +124,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         flowLayout.invalidateLayout()
     }
     
-
+    
     
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -153,17 +151,23 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
-
-        return cell
     }
     
     //same function also in MasterViewController
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
-        
+
         let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
         cell.inDetailView = true
         cell.label.text = titleString
-
+        
+        // add blur
+        /*
+        var visualEffectView = UIVisualEffectView()
+        visualEffectView.effect = UIBlurEffect(style: .Light)
+        visualEffectView.frame = cell.label.bounds
+        cell.label.addSubview(visualEffectView)
+        */
+        
         let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.section*5 + indexPath.row))!
         cell.imageUrl = url
         

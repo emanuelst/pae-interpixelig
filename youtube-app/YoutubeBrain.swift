@@ -114,6 +114,14 @@ class YoutubeBrain{
             return titleString!
     }
     
+    func getDescriptionForIndex(index: Int) ->
+        String {
+            let title = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
+            let titleString = title["description"] as? String
+            
+            return titleString!
+    }
+    
     func getImageUrlForIndex(index: Int) -> String {
         //we probably should not be doing that like this
         let url = jsonDict["items"]?[index]!["snippet"]! as! NSDictionary
