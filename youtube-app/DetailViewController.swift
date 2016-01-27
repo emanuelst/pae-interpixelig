@@ -59,9 +59,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         self.view.backgroundColor = UIColor.blackColor()
         // self.relatedVideosCollectionView.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cell")
         self.relatedVideosCollectionView.reloadData()
-        
-        // self.relatedVideosCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .CenteredVertically, animated: true)
-
     }
     
     func configureView() {
@@ -101,10 +98,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        //
-        //self.relatedVideosCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 2, inSection: 2), atScrollPosition: .CenteredHorizontally, animated: true)
-        //self.relatedVideosCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 2, inSection: 2), atScrollPosition: .CenteredVertically, animated: true)
-
         guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
@@ -127,15 +120,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
                 relatedVideosCollectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
             }
             
-            
-            
             // self.relatedVideosCollectionView.scrollToItemAtIndexPath(0, atScrollPosition: .Top , animated: true)
             flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width, height: relatedVideosCollectionView.frame.size.width * 9.0 / 16.0)
         }
-        
-        //print("flowLayout frame: ", flowLayout.itemSize)
-        
-        
         flowLayout.invalidateLayout()
     }
     
@@ -149,8 +136,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // return 20
-        
+        //return 20
         //let sectionInfo = self.fetchedResultsController.sections![section]
         //does this return the correct number...
         if(dict != nil && dict!["items"] != nil && dict!.count != 0){
@@ -163,26 +149,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        // let cell = collectionView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
         
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
 
-        
-        /*
-        let cell = epicCollectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
-        cell.label.text = self.theData[indexPath.section%4][indexPath.row%5]
-        return cell
-        */
-        
-        
-        /*
-        let cell:VideoCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! VideoCell
-        self.configureCell(cell, atIndexPath: indexPath)
-        */
         return cell
     }
     
@@ -193,13 +164,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         cell.inDetailView = true
         cell.label.text = titleString
 
-        
         let url:NSURL = NSURL(string: youtubeBrain.getImageUrlForIndex(indexPath.section*5 + indexPath.row))!
         cell.imageUrl = url
-        
-        // cell.load_image(url)
-        
-
         
         // Image loading.
         // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
@@ -219,25 +185,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
                 
             }
         }
-        /*
-        if let dataVar:NSData = NSData(contentsOfURL:url){
-            
-            cell.image = UIImage(data: dataVar)
-            cell.imageView.alpha = 0.3
-        }
-        */
-        /*
-        print(indexPath.section)
-        print(indexPath.row)
-        print(indexPath.section*5 + indexPath.row)
-        print(cell.imageView.image)
-        print("xx")
-        */
-
     }
-    
-
-    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {

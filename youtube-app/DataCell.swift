@@ -25,7 +25,6 @@ class DataCell: UICollectionViewCell {
         self.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.6, alpha: 1)
         self.layer.cornerRadius = 5.0
         self.contentView.addSubview(label)
-        
     }
 
     required init?(coder aDecoder: NSCoder) {

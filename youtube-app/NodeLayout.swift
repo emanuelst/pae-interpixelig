@@ -8,6 +8,7 @@
 
 import UIKit
 
+// code modified from https://stackoverflow.com/questions/15549233/view-with-continuous-scroll-both-horizontal-and-vertical
 class NodeLayout : UICollectionViewFlowLayout {
     var itemWidth : CGFloat
     var itemHeight : CGFloat
@@ -28,8 +29,6 @@ class NodeLayout : UICollectionViewFlowLayout {
         if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) {
             return super.collectionViewContentSize()
         }
-        
-        
         let w : CGFloat = CGFloat(self.collectionView!.numberOfItemsInSection(0)) * (itemWidth + space)
         let h : CGFloat = CGFloat(self.collectionView!.numberOfSections()) * (itemHeight + space)
         return CGSizeMake(w, h)
@@ -46,18 +45,16 @@ class NodeLayout : UICollectionViewFlowLayout {
         attributes.frame = CGRectMake(x, y, itemWidth, itemHeight)
         return attributes
     }
-
+    
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) {
             return super.layoutAttributesForElementsInRect(rect)
         }
-        
-        let minRow : Int = (rect.origin.x > 0) ? Int(rect.origin.x/(itemWidth + space)) : 0
-        let maxRow : Int = Int(floor(rect.size.width/(itemWidth + space)) + CGFloat(minRow))
+        // let minRow : Int = (rect.origin.x > 0) ? Int(rect.origin.x/(itemWidth + space)) : 0
+        // let maxRow : Int = Int(floor(rect.size.width/(itemWidth + space)) + CGFloat(minRow))
         var attributes : Array<UICollectionViewLayoutAttributes> = [UICollectionViewLayoutAttributes]()
         for i in 0..<5 {
             for j in 0..<5 {
-
                 attributes.append(self.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: j, inSection: i))!)
             }
         }
@@ -69,5 +66,5 @@ class NodeLayout : UICollectionViewFlowLayout {
         
         
     }
-
+    
 }
