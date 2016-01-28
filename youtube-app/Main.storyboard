@@ -51,10 +51,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="367" height="98"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsy-Vg-nqN" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="77" width="367" height="21"/>
+                                                <label userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsy-Vg-nqN" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="38" width="367" height="60"/>
                                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="textView"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="k72-Tk-ctC">
+                                                            <variation key="heightClass=compact" constant="35"/>
+                                                        </constraint>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -203,10 +208,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="442" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjs-7K-eHB" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="77" width="442" height="21"/>
+                                        <label userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjs-7K-eHB" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="48" width="442" height="50"/>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <accessibility key="accessibilityConfiguration" identifier="textView"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="7Vg-dP-brf"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
