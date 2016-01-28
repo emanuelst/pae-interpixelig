@@ -341,8 +341,7 @@ class MasterViewController: UICollectionViewController, NSFetchedResultsControll
     
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
         if(dict == nil && dict!.count == 0){
-            cell.label.text = "xxx"
-            
+            cell.label.text = "Label"
         }
         else {
             let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)

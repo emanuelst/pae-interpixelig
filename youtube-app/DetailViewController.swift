@@ -13,7 +13,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     
     var youtubeBrain = YoutubeBrain()
     
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var detailDescriptionLabel: VideoLabel!
     
     @IBOutlet weak var playerView: YTPlayerView!
     @IBOutlet weak var relatedVideosCollectionView: RDCollectionView!
@@ -153,8 +153,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
-
-        return cell
     }
     
     //same function also in MasterViewController
@@ -171,14 +169,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         // code from http://www.splinter.com.au/2015/09/24/swift-image-cache/
         if let image = url.cachedImage {
             // Cached: set immediately.
-            cell.imageView.image = image
+            cell.image = image
             cell.imageView.alpha = 1
         } else {
             // Not cached, so load then fade it in.
             cell.imageView.alpha = 1
             url.fetchImage { image in
                 // Check the cell hasn't recycled while loading.
-                cell.imageView.image = image
+                cell.image = image
                 if cell.imageUrl == url {
                     cell.imageView.image = image
                 }

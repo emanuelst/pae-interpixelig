@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB2960EF1C5ABEC400209900 /* VideoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2960EE1C5ABEC400209900 /* VideoLabel.swift */; };
 		C2E44D136F14AD7C88363A45 /* Pods_youtube_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10531675C713637B1A53911 /* Pods_youtube_app.framework */; };
 		E00D136E1C1F4CAC00D23165 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00D136D1C1F4CAC00D23165 /* ImageCache.swift */; };
 		E06201531C5698050075A4C9 /* NodeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06201521C5698050075A4C9 /* NodeLayout.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		2607BCB6C3600F9C4ED7D14F /* Pods-youtube-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-youtube-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-youtube-app/Pods-youtube-app.debug.xcconfig"; sourceTree = "<group>"; };
 		732E2BCCE9C5E3E0093E6D2C /* Pods-youtube-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-youtube-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-youtube-app/Pods-youtube-app.release.xcconfig"; sourceTree = "<group>"; };
+		AB2960EE1C5ABEC400209900 /* VideoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLabel.swift; sourceTree = "<group>"; };
 		E00D136D1C1F4CAC00D23165 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		E06201521C5698050075A4C9 /* NodeLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeLayout.swift; sourceTree = "<group>"; };
 		E06201541C569D480075A4C9 /* RDCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RDCollectionView.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				E0E69BA71BF527C0003870D1 /* Info.plist */,
 				E0F35DC81BF58E8D00A80F9D /* keys.plist */,
 				E0650BA61C147F7000C01495 /* MasterViewController.swift */,
+				AB2960EE1C5ABEC400209900 /* VideoLabel.swift */,
 				E00D136D1C1F4CAC00D23165 /* ImageCache.swift */,
 				E0A450F41C18BFD0009BD1FA /* VideoCell.swift */,
 				E0B1BABB1C1DD90700F25573 /* AutoCompleteTextField.swift */,
@@ -380,6 +383,7 @@
 				E0B1BABE1C1DF64200F25573 /* TappableSubviewNavBar.swift in Sources */,
 				E06201551C569D480075A4C9 /* RDCollectionView.swift in Sources */,
 				E0E69B9A1BF527BF003870D1 /* AppDelegate.swift in Sources */,
+				AB2960EF1C5ABEC400209900 /* VideoLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
