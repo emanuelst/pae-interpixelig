@@ -35,8 +35,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ley-0S-AKN" customClass="RDCollectionView" customModule="youtube_app" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="371" width="600" height="165"/>
+                                <rect key="frame" x="0.0" y="379" width="600" height="157"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="157" id="pgx-B7-Fc1"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Fbb-hS-qYZ">
                                     <size key="itemSize" width="367" height="98"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -45,7 +48,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Xvn-ie-F6i" customClass="VideoCell" customModule="youtube_app" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="34" width="367" height="98"/>
+                                        <rect key="frame" x="0.0" y="30" width="367" height="98"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="367" height="98"/>
@@ -74,6 +77,20 @@
                                             <constraint firstAttribute="bottom" secondItem="vsy-Vg-nqN" secondAttribute="bottom" id="USp-5k-ynE"/>
                                             <constraint firstAttribute="trailing" secondItem="vsy-Vg-nqN" secondAttribute="trailing" id="rM8-dJ-8vx"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="KSb-wX-aXn"/>
+                                                <exclude reference="lip-GI-e1L"/>
+                                                <exclude reference="sYc-bt-fKe"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="KSb-wX-aXn"/>
+                                                <include reference="lip-GI-e1L"/>
+                                                <include reference="sYc-bt-fKe"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <outlet property="label" destination="vsy-Vg-nqN" id="FRL-c5-AsA"/>
                                         </connections>
@@ -84,13 +101,6 @@
                                     <outlet property="delegate" destination="JEX-9P-axG" id="Xub-xI-L8j"/>
                                 </connections>
                             </collectionView>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="0.0" y="346" width="600" height="17"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" size="system"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AX7-kB-OqT" userLabel="Player View" customClass="YTPlayerView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="338"/>
                                 <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -98,23 +108,30 @@
                                     <constraint firstAttribute="width" secondItem="AX7-kB-OqT" secondAttribute="height" multiplier="16:9" id="J8W-Ym-oms"/>
                                 </constraints>
                             </view>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
+                                <rect key="frame" x="0.0" y="346" width="600" height="25"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" size="system"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="width" secondItem="AX7-kB-OqT" secondAttribute="width" id="14B-Bd-dFD"/>
                             <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="60r-Nz-9Sc"/>
+                            <constraint firstItem="Ley-0S-AKN" firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" id="9Vz-EG-gnq"/>
                             <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="top" id="AYt-bh-hRx"/>
+                            <constraint firstItem="Ley-0S-AKN" firstAttribute="leading" secondItem="0XM-y9-sOw" secondAttribute="leading" id="H7i-sy-CTn"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="LUc-p4-6JI"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" multiplier="1/3" id="S86-sk-5fD"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="UYG-Be-PD5"/>
-                            <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="8" symbolic="YES" id="b1j-Xo-bE8"/>
+                            <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="8" symbolic="YES" id="X9D-f4-ZgG"/>
+                            <constraint firstItem="Ley-0S-AKN" firstAttribute="bottom" secondItem="GAO-Cl-Wes" secondAttribute="top" id="cU8-Tt-5qJ"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="hDq-si-j1o"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="centerX" secondItem="AX7-kB-OqT" secondAttribute="centerX" id="mXe-zk-Te4"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" id="o8L-gi-Leg"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="AX7-kB-OqT" secondAttribute="bottom" constant="8" symbolic="YES" id="oM4-zs-xtk"/>
-                            <constraint firstItem="Ley-0S-AKN" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="re6-CE-eAZ"/>
-                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="Ley-0S-AKN" secondAttribute="bottom" id="sNU-TZ-1Ds"/>
-                            <constraint firstItem="Ley-0S-AKN" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" id="zHE-ry-737"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -126,8 +143,8 @@
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="subviews">
-                                <exclude reference="0XM-y9-sOw"/>
                                 <include reference="AX7-kB-OqT"/>
+                                <exclude reference="0XM-y9-sOw"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="LUc-p4-6JI"/>
