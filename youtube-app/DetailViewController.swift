@@ -112,11 +112,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
             
         } else {
             // scroll to top
-            let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+            /*let indexPath = NSIndexPath(forItem: 0, inSection: 0)
             
             if(relatedVideosCollectionView!.numberOfItemsInSection(0) > 0){
                 relatedVideosCollectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
             }
+            */
             
             // self.relatedVideosCollectionView.scrollToItemAtIndexPath(0, atScrollPosition: .Top , animated: true)
             flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width, height: relatedVideosCollectionView.frame.size.width * 9.0 / 16.0)
@@ -129,7 +130,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //return self.fetchedResultsController.sections?.count ?? 0
-        return 5
+        if dict == nil { return 1 }
+        if dict!["items"] == nil {return 1}
+        
+        return Int(floor(sqrt(Double(dict!["items"]!.count))))
     }
     
     
@@ -138,7 +142,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         //let sectionInfo = self.fetchedResultsController.sections![section]
         //does this return the correct number...
         if(dict != nil && dict!["items"] != nil && dict!.count != 0){
-            return dict!["items"]!.count <= 5 ? dict!["items"]!.count : 5
+            return Int(floor(sqrt(Double(dict!["items"]!.count))))
         }
         else {
             return 0
@@ -183,8 +187,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
             url.fetchImage { image in
                 // Check the cell hasn't recycled while loading.
                 cell.image = image
+                cell.imageView.alpha = 0
                 if cell.imageUrl == url {
                     cell.imageView.image = image
+                    
+                    UIView.animateWithDuration(0.3) {
+                        cell.imageView.alpha = 1
+                    }
                 }
                 
             }

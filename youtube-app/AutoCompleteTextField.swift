@@ -140,7 +140,8 @@ public class AutoCompleteTextField: UITextField, UITextFieldDelegate, UITableVie
         
         if enableAttributedText{
             // FIXME this line sometimes causes a fatal error: Array index out of range
-            // print("DEBUG\(indexPath.row)")
+            print("DEBUG\(indexPath.row)")
+            
             if indexPath.row < attributedAutoCompleteStrings!.count && indexPath.row >= 0 {
                 cell?.textLabel?.attributedText = attributedAutoCompleteStrings![indexPath.row]
             } else {

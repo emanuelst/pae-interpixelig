@@ -50,11 +50,13 @@ class NodeLayout : UICollectionViewFlowLayout {
         if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) {
             return super.layoutAttributesForElementsInRect(rect)
         }
-        // let minRow : Int = (rect.origin.x > 0) ? Int(rect.origin.x/(itemWidth + space)) : 0
-        // let maxRow : Int = Int(floor(rect.size.width/(itemWidth + space)) + CGFloat(minRow))
+        
         var attributes : Array<UICollectionViewLayoutAttributes> = [UICollectionViewLayoutAttributes]()
-        for i in 0..<5 {
-            for j in 0..<5 {
+        
+        let numberOfItemsInSection = self.collectionView?.numberOfItemsInSection(0)
+        
+        for i in 0..<numberOfItemsInSection! {
+            for j in 0..<numberOfItemsInSection! {
                 attributes.append(self.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: j, inSection: i))!)
             }
         }
