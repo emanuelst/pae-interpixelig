@@ -50,7 +50,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
         
         self.configureView()
         
-        let layout = NodeLayout(itemWidth: relatedVideosCollectionView.frame.size.width / 3.0, itemHeight: 100, space: 0)
+        let layout = NodeLayout(itemWidth: relatedVideosCollectionView.frame.size.width / 3.0, itemHeight: 100, space: 1)
         self.relatedVideosCollectionView.collectionViewLayout = layout
         self.relatedVideosCollectionView.showsHorizontalScrollIndicator = false
         self.relatedVideosCollectionView.showsVerticalScrollIndicator = false
