@@ -113,6 +113,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
             let y = relatedVideosCollectionView.contentSize.height/2 - relatedVideosCollectionView.frame.size.height/2
             
             self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+
             
         } else {
             // scroll to top
@@ -250,7 +251,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
             let viewFrameSize = relatedVideosCollectionView.frame.size
             
             // ToDo: fix magic number
-            let offsetX = relatedVideosCollectionView.contentOffset.x - relatedVideosCollectionView.frame.width / 2 - playerWidth/2 + 1
+            let offsetX = relatedVideosCollectionView.contentOffset.x - relatedVideosCollectionView.frame.width / 2 - playerWidth/2
             let offsetY = relatedVideosCollectionView.contentOffset.y - relatedVideosCollectionView.frame.height / 2 - playerHeight/2 - 32.0
             
             let maxOffsetX = viewFrameSize.width/2 - playerWidth/2

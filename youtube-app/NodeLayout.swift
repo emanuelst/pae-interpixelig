@@ -50,7 +50,7 @@ class NodeLayout : UICollectionViewFlowLayout {
         let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         let x : CGFloat = CGFloat(indexPath.row) * (itemWidth + space)
         let y : CGFloat = CGFloat(indexPath.section) + CGFloat(indexPath.section) * (itemHeight + space)
-        attributes.frame = CGRectMake(x, y, itemWidth, itemHeight)
+        attributes.frame = CGRectMake(x, y-1.0, itemWidth, itemHeight+1.0)
         return attributes
     }
     
