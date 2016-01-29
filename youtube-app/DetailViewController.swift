@@ -250,16 +250,18 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
             let viewFrameSize = relatedVideosCollectionView.frame.size
             
             // ToDo: fix magic number
-            let offsetX = relatedVideosCollectionView.contentOffset.x - relatedVideosCollectionView.frame.width / 2 - 36.5
-            let offsetY = relatedVideosCollectionView.contentOffset.y - relatedVideosCollectionView.frame.height / 2 - 10.5
+            let offsetX = relatedVideosCollectionView.contentOffset.x - relatedVideosCollectionView.frame.width / 2 - playerWidth/2 + 1
+            let offsetY = relatedVideosCollectionView.contentOffset.y - relatedVideosCollectionView.frame.height / 2 - playerHeight/2 - 32.0
             
             let maxOffsetX = viewFrameSize.width/2 - playerWidth/2
-            let maxOffsetY =  viewFrameSize.height/2 - playerHeight/2
+            let maxOffsetY = viewFrameSize.height/2 - playerHeight/2
+            
+            print("offsetY: ", offsetY, " maxOffsetY: ", maxOffsetY)
             
             let maxedOffsetX = abs(offsetX) > maxOffsetX ? getSign(offsetX) * maxOffsetX : offsetX
             let maxedOffsetY = abs(offsetY) > maxOffsetY ? getSign(offsetY) * maxOffsetY : offsetY
         
-            playerView.center = CGPointMake(contentCenterX-viewFrameSize.width/2 - maxedOffsetX - 36.5, contentCenterY-viewFrameSize.height/2 - maxedOffsetY - 10.5);
+            playerView.center = CGPointMake(contentCenterX-viewFrameSize.width/2 - maxedOffsetX - playerWidth/2, contentCenterY-viewFrameSize.height/2 - maxedOffsetY - playerHeight/2 - 32.0);
         }
         
         
