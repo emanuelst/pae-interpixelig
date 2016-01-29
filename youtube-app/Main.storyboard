@@ -35,7 +35,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ley-0S-AKN" customClass="RDCollectionView" customModule="youtube_app" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="371" width="600" height="165"/>
+                                <rect key="frame" x="0.0" y="368" width="600" height="168"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Fbb-hS-qYZ">
                                     <size key="itemSize" width="367" height="98"/>
@@ -45,13 +45,13 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Xvn-ie-F6i" customClass="VideoCell" customModule="youtube_app" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="34" width="367" height="98"/>
+                                        <rect key="frame" x="0.0" y="35" width="367" height="98"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="367" height="98"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsy-Vg-nqN" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
+                                                <label userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsy-Vg-nqN" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="38" width="367" height="60"/>
                                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="textView"/>
@@ -83,11 +83,14 @@
                                     <outlet property="delegate" destination="JEX-9P-axG" id="Xub-xI-L8j"/>
                                 </connections>
                             </collectionView>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="0.0" y="346" width="600" height="17"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <label clipsSubviews="YES" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="338" width="600" height="30"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="TBv-j3-Rir"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" size="system"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AX7-kB-OqT" userLabel="Player View" customClass="YTPlayerView">
@@ -98,7 +101,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="width" secondItem="AX7-kB-OqT" secondAttribute="width" id="14B-Bd-dFD"/>
                             <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="60r-Nz-9Sc"/>
@@ -106,11 +109,11 @@
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="LUc-p4-6JI"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" multiplier="1/3" id="S86-sk-5fD"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="UYG-Be-PD5"/>
-                            <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="8" symbolic="YES" id="b1j-Xo-bE8"/>
+                            <constraint firstItem="Ley-0S-AKN" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" id="b1j-Xo-bE8"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="hDq-si-j1o"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="centerX" secondItem="AX7-kB-OqT" secondAttribute="centerX" id="mXe-zk-Te4"/>
                             <constraint firstItem="AX7-kB-OqT" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" id="o8L-gi-Leg"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="AX7-kB-OqT" secondAttribute="bottom" constant="8" symbolic="YES" id="oM4-zs-xtk"/>
+                            <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="AX7-kB-OqT" secondAttribute="bottom" id="oM4-zs-xtk"/>
                             <constraint firstItem="Ley-0S-AKN" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="re6-CE-eAZ"/>
                             <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="Ley-0S-AKN" secondAttribute="bottom" id="sNU-TZ-1Ds"/>
                             <constraint firstItem="Ley-0S-AKN" firstAttribute="width" secondItem="svH-Pt-448" secondAttribute="width" id="zHE-ry-737"/>
@@ -208,7 +211,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="442" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjs-7K-eHB" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
+                                        <label userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjs-7K-eHB" customClass="VideoLabel" customModule="youtube_app" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="48" width="442" height="50"/>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <accessibility key="accessibilityConfiguration" identifier="textView"/>
