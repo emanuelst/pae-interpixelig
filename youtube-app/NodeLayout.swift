@@ -25,6 +25,14 @@ class NodeLayout : UICollectionViewFlowLayout {
         self.space = 0
         super.init()
     }
+    
+    func setSizeTo(itemWidth: CGFloat, itemHeight: CGFloat, space: CGFloat) {
+        self.itemWidth = itemWidth
+        self.itemHeight = itemHeight
+        self.space = space
+        invalidateLayout()
+    }
+    
     override func collectionViewContentSize() -> CGSize {
         if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) {
             return super.collectionViewContentSize()
