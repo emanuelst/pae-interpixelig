@@ -146,9 +146,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
         flowLayout.invalidateLayout()
     }
     
-    
-    
-    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //return self.fetchedResultsController.sections?.count ?? 0
         if dict == nil { return 1 }
@@ -234,8 +231,18 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
-            scrollToCenter()
+            // scrollToCenter()
+        } else {
+            // ToDo: always scroll to top when view appears? or keep position?
+            // scrollToTop()
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //print(self.transitionCoordinator()?.description)
+        self.transitionCoordinator()?.animateAlongsideTransition({context in self.scrollToCenter()}, completion: nil)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -282,8 +289,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
             let maxedOffsetX = abs(offsetX) > maxOffsetX ? getSign(offsetX) * maxOffsetX : offsetX
             let maxedOffsetY = abs(offsetY) > maxOffsetY ? getSign(offsetY) * maxOffsetY : offsetY
             
-            print(maxedOffsetY, " ", offsetY)
-            
             playerView.center = CGPointMake(contentCenterX-viewFrameSize.width/2 - maxedOffsetX - playerWidth/2, contentCenterY-viewFrameSize.height/2 - maxedOffsetY - playerHeight/2 - 32.0);
         }
         
@@ -311,12 +316,22 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
         
         self.relatedVideosCollectionView.reloadData()
         
-        let x = self.relatedVideosCollectionView.frame.width/2 + self.playerView.webView.frame.width/2
-        let y = self.relatedVideosCollectionView.frame.height/2 + self.playerView.webView.frame.height/2 + self.navigationController!.navigationBar.frame.height
+        let x = self.relatedVideosCollectionView.frame.width/2 + self.playerView.webView.frame.width/2 // + 1
+        let y = self.relatedVideosCollectionView.frame.height/2 + self.playerView.webView.frame.height/2 + self.navigationController!.navigationBar.frame.height + 3
         
-        self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+        print(x," ", y)
+        
+        self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: true)
         
         self.relatedVideosCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    func scrollToTop() {
+        let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+        
+        if(relatedVideosCollectionView!.numberOfItemsInSection(0) > 0){
+            relatedVideosCollectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        }
     }
     
     
@@ -325,13 +340,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
     // when: viewWillTransitionToSize, scrollToCenter doesnt work some of the time...
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        coordinator.animateAlongsideTransition(nil, completion: {context in
+        
+        coordinator.animateAlongsideTransition({ context in
             if(UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait || UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown){
-                //this is portrait (or upsidedown), do something
-            }else{
+                self.scrollToTop()
+            } else {
                 self.scrollToCenter()
             }
-        })
+            }, completion: nil)
         /*
         if UIDevice.currentDevice().orientation.isLandscape.boolValue {
         print("landscape")

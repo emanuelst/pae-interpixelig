@@ -17,6 +17,7 @@
 		E0650BA91C147F8400C01495 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0650BA81C147F8400C01495 /* DetailViewController.swift */; };
 		E0650BAD1C14800700C01495 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0650BAC1C14800700C01495 /* Main.storyboard */; };
 		E0650BEF1C1483E200C01495 /* youtube-app.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E0650BED1C1483E200C01495 /* youtube-app.xcdatamodeld */; };
+		E0A287191C5BC5B400496F93 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A287181C5BC5B400496F93 /* MyNavigationController.swift */; };
 		E0A450F51C18BFD0009BD1FA /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A450F41C18BFD0009BD1FA /* VideoCell.swift */; };
 		E0B1BABC1C1DD90700F25573 /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B1BABB1C1DD90700F25573 /* AutoCompleteTextField.swift */; };
 		E0B1BABE1C1DF64200F25573 /* TappableSubviewNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B1BABD1C1DF64200F25573 /* TappableSubviewNavBar.swift */; };
@@ -59,6 +60,7 @@
 		E0650BAC1C14800700C01495 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E0650BEB1C1483BA00C01495 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E0650BEE1C1483E200C01495 /* youtube-app.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "youtube-app.xcdatamodel"; sourceTree = "<group>"; };
+		E0A287181C5BC5B400496F93 /* MyNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
 		E0A450F41C18BFD0009BD1FA /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		E0B1BABB1C1DD90700F25573 /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
 		E0B1BABD1C1DF64200F25573 /* TappableSubviewNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableSubviewNavBar.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			children = (
 				E0E69B991BF527BF003870D1 /* AppDelegate.swift */,
 				E0650BAC1C14800700C01495 /* Main.storyboard */,
+				E0A287181C5BC5B400496F93 /* MyNavigationController.swift */,
 				E0B1BABD1C1DF64200F25573 /* TappableSubviewNavBar.swift */,
 				E0E69BA21BF527C0003870D1 /* Assets.xcassets */,
 				E0E69BA41BF527C0003870D1 /* LaunchScreen.storyboard */,
@@ -382,6 +385,7 @@
 				E06201531C5698050075A4C9 /* NodeLayout.swift in Sources */,
 				E0B1BABE1C1DF64200F25573 /* TappableSubviewNavBar.swift in Sources */,
 				E06201551C569D480075A4C9 /* RDCollectionView.swift in Sources */,
+				E0A287191C5BC5B400496F93 /* MyNavigationController.swift in Sources */,
 				E0E69B9A1BF527BF003870D1 /* AppDelegate.swift in Sources */,
 				AB2960EF1C5ABEC400209900 /* VideoLabel.swift in Sources */,
 			);
