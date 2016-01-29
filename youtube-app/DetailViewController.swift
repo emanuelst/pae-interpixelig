@@ -97,12 +97,16 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+        // print(self.playerView.webView.frame)
+        
         guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
         
         if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
             flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width / 3.0, height: relatedVideosCollectionView.frame.size.height / 3.0)
+            
+            (self.relatedVideosCollectionView.collectionViewLayout as! NodeLayout).setSizeTo(self.playerView.webView.frame.width, itemHeight: self.playerView.webView.frame.height, space: 0)
             
             // scroll to center
             let x = relatedVideosCollectionView.contentSize.width/2 - relatedVideosCollectionView.frame.size.width/2
