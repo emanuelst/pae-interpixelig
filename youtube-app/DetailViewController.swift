@@ -20,6 +20,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
     
     @IBOutlet weak var epicCollectionView: RDCollectionView!
     
+    var centered = false
     var dict: NSDictionary? = nil
     
     var videoId: String?
@@ -97,6 +98,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+        print("viewWillLayoutSubviews")
         // print(self.playerView.webView.frame)
         
         guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -109,18 +111,32 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
             (self.relatedVideosCollectionView.collectionViewLayout as! NodeLayout).setSizeTo(self.playerView.webView.frame.width, itemHeight: self.playerView.webView.frame.height, space: 0)
             
             // scroll to center
-            let x = relatedVideosCollectionView.contentSize.width/2 - relatedVideosCollectionView.frame.size.width/2
-            let y = relatedVideosCollectionView.contentSize.height/2 - relatedVideosCollectionView.frame.size.height/2
+            /*
+            let x = relatedVideosCollectionView.frame.width/2 + self.playerView.webView.frame.width/2
+            let y = relatedVideosCollectionView.frame.height/2 + self.playerView.webView.frame.height/2
             
             self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
-
+            */
+            /*
+            if !centered && relatedVideosCollectionView.contentSize.width != 0{
+            // - relatedVideosCollectionView.frame.size.width/2
+            let x = relatedVideosCollectionView.frame.width/2 + self.playerView.webView.frame.width/2
+            let y = relatedVideosCollectionView.frame.height/2 + self.playerView.webView.frame.height/2
+            
+            self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+            
+            centered = true
+            print(relatedVideosCollectionView.contentSize.width, " ", centered)
+            print(x, " ", centered)
+            }
+            */
             
         } else {
             // scroll to top
             /*let indexPath = NSIndexPath(forItem: 0, inSection: 0)
             
             if(relatedVideosCollectionView!.numberOfItemsInSection(0) > 0){
-                relatedVideosCollectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+            relatedVideosCollectionView?.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
             }
             */
             
@@ -164,7 +180,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
     
     //same function also in MasterViewController
     func configureCell(cell: VideoCell, atIndexPath indexPath: NSIndexPath) {
-
+        
         let titleString = youtubeBrain.getTitleStringForIndex(indexPath.row)
         cell.inDetailView = true
         cell.label.text = titleString
@@ -215,6 +231,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
         playerView.pauseVideo()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
+            scrollToCenter()
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -241,27 +263,27 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
-        
+            
             let playerWidth = playerView.webView.frame.width
             let playerHeight = playerView.webView.frame.height
             
             let contentCenterX = relatedVideosCollectionView.contentSize.width/2
-            let contentCenterY = relatedVideosCollectionView.contentSize.height/2
+            let contentCenterY = relatedVideosCollectionView.contentSize.height/2 + 3
             
             let viewFrameSize = relatedVideosCollectionView.frame.size
             
-            // ToDo: fix magic number
+            // ToDo: fix magic numbers: 32.0, 1.0, 3.0
             let offsetX = relatedVideosCollectionView.contentOffset.x - relatedVideosCollectionView.frame.width / 2 - playerWidth/2
             let offsetY = relatedVideosCollectionView.contentOffset.y - relatedVideosCollectionView.frame.height / 2 - playerHeight/2 - 32.0
             
-            let maxOffsetX = viewFrameSize.width/2 - playerWidth/2
-            let maxOffsetY = viewFrameSize.height/2 - playerHeight/2
-            
-            print("offsetY: ", offsetY, " maxOffsetY: ", maxOffsetY)
+            let maxOffsetX = viewFrameSize.width/2 - playerWidth/2 + 1
+            let maxOffsetY = viewFrameSize.height/2 - playerHeight/2 + 3
             
             let maxedOffsetX = abs(offsetX) > maxOffsetX ? getSign(offsetX) * maxOffsetX : offsetX
             let maxedOffsetY = abs(offsetY) > maxOffsetY ? getSign(offsetY) * maxOffsetY : offsetY
-        
+            
+            print(maxedOffsetY, " ", offsetY)
+            
             playerView.center = CGPointMake(contentCenterX-viewFrameSize.width/2 - maxedOffsetX - playerWidth/2, contentCenterY-viewFrameSize.height/2 - maxedOffsetY - playerHeight/2 - 32.0);
         }
         
@@ -276,20 +298,61 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIScroll
         }
     }
     
+    // zu hoch
+    func scrollToCenter() {
+        //landscape
+        guard let flowLayout = relatedVideosCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        flowLayout.itemSize = CGSize(width: relatedVideosCollectionView.frame.size.width / 3.0, height: relatedVideosCollectionView.frame.size.height / 3.0)
+        
+        (self.relatedVideosCollectionView.collectionViewLayout as! NodeLayout).setSizeTo(self.playerView.webView.frame.width, itemHeight: self.playerView.webView.frame.height, space: 0)
+        
+        self.relatedVideosCollectionView.reloadData()
+        
+        let x = self.relatedVideosCollectionView.frame.width/2 + self.playerView.webView.frame.width/2
+        let y = self.relatedVideosCollectionView.frame.height/2 + self.playerView.webView.frame.height/2 + self.navigationController!.navigationBar.frame.height
+        
+        self.relatedVideosCollectionView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+        
+        self.relatedVideosCollectionView.collectionViewLayout.invalidateLayout()
+    }
     
-    /*
+    
+    // http://stackoverflow.com/a/26855447/841052
+    // jaggyness ??? can we call this earlier... ?
+    // when: viewWillTransitionToSize, scrollToCenter doesnt work some of the time...
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-    print("landscape")
-    self.navigationController?.hidesBarsWhenVerticallyCompact = true
-    self.navigationController?.navigationBarHidden = true
-    } else {
-    print("portrait")
-    self.navigationController?.hidesBarsWhenVerticallyCompact = true
-    self.navigationController?.navigationBarHidden = false
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        coordinator.animateAlongsideTransition(nil, completion: {context in
+            if(UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait || UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown){
+                //this is portrait (or upsidedown), do something
+            }else{
+                self.scrollToCenter()
+            }
+        })
+        /*
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+        print("landscape")
+        print(size)
+        // self.navigationController?.hidesBarsWhenVerticallyCompact = true
+        // self.navigationController?.navigationBarHidden = true
+        
+        // - relatedVideosCollectionView.frame.size.width/2
+        
+        
+        // centered = false
+        } else {
+        print("portrait")
+        print(size)
+        // self.navigationController?.hidesBarsWhenVerticallyCompact = true
+        // self.navigationController?.navigationBarHidden = false
+        centered = false
+        }
+        }
+        */
     }
-    }
-    */
     
 }
 
