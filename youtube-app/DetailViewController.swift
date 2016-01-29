@@ -9,7 +9,7 @@
 import UIKit
 import youtube_ios_player_helper
 
-class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayerViewDelegate {
+class DetailViewController: UIViewController, UICollectionViewDelegate, UIScrollViewDelegate, YTPlayerViewDelegate {
     
     var youtubeBrain = YoutubeBrain()
     
@@ -232,6 +232,43 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, YTPlayer
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 0
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
+        
+            let playerWidth = playerView.webView.frame.width
+            let playerHeight = playerView.webView.frame.height
+            
+            let contentCenterX = relatedVideosCollectionView.contentSize.width/2
+            let contentCenterY = relatedVideosCollectionView.contentSize.height/2
+            
+            let viewFrameSize = relatedVideosCollectionView.frame.size
+            
+            // ToDo: fix magic number
+            let offsetX = relatedVideosCollectionView.contentOffset.x - relatedVideosCollectionView.frame.width / 2 - 36.5
+            let offsetY = relatedVideosCollectionView.contentOffset.y - relatedVideosCollectionView.frame.height / 2 - 10.5
+            
+            let maxOffsetX = viewFrameSize.width/2 - playerWidth/2
+            let maxOffsetY =  viewFrameSize.height/2 - playerHeight/2
+            
+            let maxedOffsetX = abs(offsetX) > maxOffsetX ? getSign(offsetX) * maxOffsetX : offsetX
+            let maxedOffsetY = abs(offsetY) > maxOffsetY ? getSign(offsetY) * maxOffsetY : offsetY
+        
+            playerView.center = CGPointMake(contentCenterX-viewFrameSize.width/2 - maxedOffsetX - 36.5, contentCenterY-viewFrameSize.height/2 - maxedOffsetY - 10.5);
+        }
+        
+        
+    }
+    
+    func getSign(number: CGFloat) -> CGFloat {
+        if number < 0 {
+            return CGFloat(-1)
+        } else {
+            return CGFloat(1)
+        }
+    }
+    
     
     /*
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
